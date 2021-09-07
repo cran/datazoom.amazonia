@@ -1,0 +1,34 @@
+---
+title: "IBAMA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{IBAMA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## The Dataset
+
+The dataset is originally from the Brazilian Institute of Environment and Renewable  Natural Resources (Ibama), documenting environmental embargoes and fines at the individual level from 2005 to the present day.
+
+## Usage
+
+`load_ibama` downloads and compiles data on environmental fines at the municipality level considering the Amazon region. 
+
+The function returns either the raw data or a data frame with aggregates considering, for eachtime-location period, counts for total the number of infractions, infractions that already went to trial, and number of unique perpetrators of infractions.
+
+```{r, eval = FALSE}
+library(datazoom.amazonia)
+
+# download raw data from all country
+raw_ibama_all <- load_ibama(dataset = "areas_embargadas",
+                            raw_data = TRUE,
+                            legal_amazon_only = FALSE)
+```

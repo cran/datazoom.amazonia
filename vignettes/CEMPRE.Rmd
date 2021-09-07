@@ -1,0 +1,35 @@
+---
+title: "CEMPRE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CEMPRE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## The Dataset
+
+Employment, salary and firm data is from IBGE's "Cadastro Central de Empresas" (aka CEMPRE). The data is available between 2006 and 2019.
+
+The definition of the Brazilian Legal Amazon at the municipality level is taken from IBGE's "Mapas Regionais - Amazônia Legal" available here: https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15819-amazonia-legal.html?=&t=o-que-e. 
+
+## Usage
+
+Using the package is easy enough:
+
+```{r, eval=FALSE}
+library(datazoom.amazonia)
+
+# download raw data from 2006 to 2019
+raw_cempre_all <- load_cempre(dataset = "cempre",
+                              raw_data = TRUE,
+                              geo_level = "municipality",
+                              time_period = 2006:2019)
+```
