@@ -143,17 +143,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="the-dataset" class="section level2">
 <h2>The Dataset</h2>
-<p>DETER uses satellite surveillance to detect and report changes in forest cover across the Legal Amazon and the Cerrado biome. Each data point consists of a warning, describing which type of change has affected a certain area of forest at a given date. Broadly speaking, it makes a distinction between events of deforestation, degradation and logging.</p>
-<p>Areas are reported in square kilometers and informed as both the area which intersects a Conservation Unit and the area intersecting a Municipality. The data extracted here spans from 2016 onward in the Amazon, and from 2018 onward in the Cerrado.</p>
+<p>DETER uses satellite surveillance to detect and report changes in forest cover across the Legal Amazon and the Cerrado biome. Each data point consists of a warning, describing which type of change has affected a certain area of forest at a given date. Broadly speaking, it makes a distinction between events of deforestation, degradation and logging. The data extracted here spans from 2016 onward in the Amazon, and from 2018 onward in the Cerrado.</p>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download raw data from all years from Amazonia</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download raw data (raw_data = TRUE) from Amazonia (dataset = &quot;deter_amz&quot;)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>deter_amz <span class="ot">&lt;-</span> <span class="fu">load_deter</span>(<span class="at">dataset =</span> <span class="st">&#39;deter_amz&#39;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">time_period =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">raw_data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated data (raw_data = FALSE) from Cerrado (dataset = &quot;deter_cerrado&quot;)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># in portuguese (language = &#39;pt&#39;)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>deter_cer <span class="ot">&lt;-</span> <span class="fu">load_deter</span>(<span class="at">dataset =</span> <span class="st">&#39;deter_cerrado&#39;</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span></code></pre></div>
 </div>
 
 

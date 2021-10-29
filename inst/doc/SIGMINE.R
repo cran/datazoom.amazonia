@@ -7,7 +7,11 @@ knitr::opts_chunk$set(
 ## ---- eval = FALSE------------------------------------------------------------
 #  library(datazoom.amazonia)
 #  
-#  # download raw data
-#  sigmine_active <- load_sigmine(dataset = 'sigmine_active',
-#                                 raw_data = TRUE)
+#  # Download raw data (raw_data = TRUE).
+#  data <- load_sigmine(dataset = 'sigmine_active', raw_data = TRUE)
+#  
+#  # Download treated data (raw_data = FALSE) in portuguese (language = "pt").
+#  data <- load_sigmine(dataset = 'sigmine_active',
+#                       raw_data = TRUE,
+#                       language = "pt")
 

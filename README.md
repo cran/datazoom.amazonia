@@ -4,6 +4,12 @@
 # datazoom.amazonia
 
 <!-- badges: start -->
+
+[![CRAN
+version](https://www.r-pkg.org/badges/version/datazoom.amazonia?color=orange)](https://cran.r-project.org/package=datazoom.amazonia)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/datazoom.amazonia?color=blue)](https://cran.r-project.org/package=datazoom.amazonia)
+<!-- [![R build status](https://github.com/datazoompuc/datazoom.amazonia/workflows/R-CMD-check/badge.svg)](https://github.com/datazoompuc/datazoom.amazonia/actions) -->
 <!-- badges: end -->
 
 The goal of datazoom.amazonia is to facilitate access to official data
@@ -29,25 +35,16 @@ datazoom.amazonia::datasets_link()
 #> # ... with 24 more rows
 ```
 
-The package is under development so the following functions still do not
-support pre-processing and language arguments, returning only the raw
-data:
-
-``` r
-load_cempre()
-load_degrad()
-load_deter()
-load_ips()
-load_pibmunic()
-load_prodes()
-load_seeg()
-load_sigmine()
-```
-
 ## Installation
 
-Currently you can only install the development version from
-[GitHub](https://github.com/) with:
+You can install the released version of `datazoom.amazonia` from
+[CRAN](https://CRAN.R-project.org/package=datazoom.amazonia) with:
+
+``` r
+install.packages("datazoom.amazonia")
+```
+
+And the development version from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -79,6 +76,13 @@ annual deforestation rates in the region. Data is available from 2000 to
 data <- load_prodes(dataset = "prodes", 
                     raw_data = TRUE,
                     time_period = 2000:2005) 
+
+# Download treated data (raw_data = FALSE) from 2010 (time_period = 2010) 
+# in portuguese (language = 'pt').
+data <- load_prodes(dataset = "prodes", 
+                    raw_data = FALSE,
+                    time_period = 2010,
+                    language = 'pt')  
 ```
 
 ## 1.2) DETER:
@@ -95,21 +99,18 @@ Loads information on change in forest cover in the Amazon.
       # TRUE: if you want the raw data.
       # FALSE: if you want the processed version of the data. 
       
-      3. time_period: you can choose from 1988 to 2020
-
-      4. language: you can choose between portuguese and english
+      3. language: you can choose between portuguese and english
 
 ``` r
-# Download raw data (raw_data = TRUE) about Amazon (dataset = "deter_amz") from all periods.
-data <- load_deter(dataset = "deter_amz", 
-                   raw_data = TRUE,
-                   time_period = "all") 
+# Download raw data (raw_data = TRUE) from Amazonia (dataset = "deter_amz")
+deter_amz <- load_deter(dataset = 'deter_amz',
+                        raw_data = TRUE)
 
-# Download raw data (raw_data = TRUE) about Cerrado (dataset = "deter_cerrado") from all periods.
-data <- load_deter(dataset = "deter_cerrado", 
-                   raw_data = TRUE,
-                   time_period = "all")
-  
+# Download treated data (raw_data = FALSE) from Cerrado (dataset = "deter_cerrado")
+# in portuguese (language = 'pt')
+deter_cer <- load_deter(dataset = 'deter_cerrado',
+                        raw_data = FALSE,
+                        language = "pt")
 ```
 
 ## 1.3) DEGRAD:
@@ -135,6 +136,12 @@ replaced by DETER-B in December 2016. Data is available from 2007 to
 data <- load_degrad(dataset = 'degrad', 
                     raw_data = TRUE,
                     time_period = 2010:2012)
+
+# download treated data (raw_data = FALSE) related to forest degradation from 2013 (time_period = 2013) in portuguese (language = "pt").
+data <- load_degrad(dataset = 'degrad', 
+                    raw_data = FALSE,
+                    time_period = 2013,
+                    language = 'pt')
 ```
 
 # 2) COMEX data:
@@ -214,16 +221,20 @@ to 2018.
       
 
 ``` r
-# Download raw data (raw_data = TRUE) on gross domestic product (dataset = 'pibmunic') from the entire country (legal_amazon_only = FALSE) by state (geo_level = 'state') from 2012 (time_period = 2012)
+# Download raw data (raw_data = TRUE) on gross domestic product 
+# (dataset = 'pibmunic') from the entire country (legal_amazon_only = FALSE) 
+# by state (geo_level = 'state') from 2012 (time_period = 2012)
 data <- load_pibmunic(dataset = 'pibmunic',
                       raw_data = TRUE,
                       geo_level = 'state',
                       time_period = 2012,
                       legal_amazon_only = FALSE)
 
-# Download raw data (raw_data = TRUE) on gross domestic product (dataset = 'pibmunic') from the Legal Amazon territory (legal_amazon_only = TRUE) by municipality (geo_level = 'municipality') during the year 2012 (time_period = 2012).   
+# Download treated data (raw_data = FALSE) on gross domestic product 
+# (dataset = 'pibmunic') from the Legal Amazon (legal_amazon_only = TRUE) 
+# by municipality (geo_level = 'municipality') from 2012 (time_period = 2012).  
 data <- load_pibmunic(dataset = 'pibmunic',
-                      raw_data = TRUE,
+                      raw_data = FALSE,
                       geo_level = 'municipality',
                       time_period = 2012,
                       legal_amazon_only = TRUE)
@@ -256,15 +267,22 @@ National Register of Legal Entities. Data is available from 2006 to
       
 
 ``` r
-# Download raw data (raw_data = TRUE) with the aggregation level being the country ( geo_level = "country") from 2008 to 2010 (time_period = 2008:2010). In this example, the user did not want to visualize data by sector (sectors = FALSE) and the user also did not want the data to be restricted to the Legal Amazon area (legal_amazon_only = FALSE).
-data <- load_cempre(dataset = "cempre", raw_data = TRUE,
-                    geo_level = "country", time_period = 2008:2010,
+# Download raw data (raw_data = TRUE) with the aggregation level being the country ( geo_level = "country") from 2008 to 2010 (time_period = 2008:2010). 
+# In this example, the user did not want to visualize data by sector (sectors = FALSE) and the user also did not want the data to be restricted to the Legal Amazon area (legal_amazon_only = FALSE).
+data <- load_cempre(dataset = "cempre", 
+                    raw_data = TRUE,
+                    geo_level = "country", 
+                    time_period = 2008:2010,
                     sectors = FALSE,
                     legal_amazon_only = FALSE) 
 
-# Download raw data (raw_data = TRUE) by state (geo_level = "state") from 2008 to 2010 (time_period = 2008:2010). In this example, the user wanted to visualize data by sector (sectors = TRUE) and the user also wanted the data to be restricted to the Legal Amazon area (legal_amazon_only = TRUE).
-data <- load_cempre(dataset = "cempre", raw_data = TRUE,
-                    geo_level = "state", time_period = 2008:2010,
+# Download treted data (raw_data = FALSE) by state (geo_level = "state") from 2008 to 2010 (time_period = 2008:2010) in portuguese (language = "pt").. 
+# In this example, the user wanted to visualize data by sector (sectors = TRUE) and the user also wanted the data to be restricted to the Legal Amazon area (legal_amazon_only = TRUE).
+data <- load_cempre(dataset = "cempre", 
+                    raw_data = FALSE,
+                    geo_level = "state", 
+                    time_period = 2008:2010,
+                    language = "pt",
                     sectors = TRUE,
                     legal_amazon_only = TRUE) 
 ```
@@ -447,16 +465,19 @@ available in 2014 and 2018.
       4. language: you can choose between portuguese and english
 
 ``` r
-# Download raw data (raw_data = TRUE) from 2014 (time_period = 2014).
-data <- load_ips(dataset = "ips", 
-                 raw_data = TRUE,
-                 time_period = 2014)
+# Download raw data (raw_data = TRUE) from 2014 (time_period = 2014)
+data <- load_ips(dataset = "ips", raw_data = TRUE, time_period = 2014)
+
+# Download treated data (raw_data = FALSE) from 2018 
+# (time_period = 2018) in portuguese (language = 'pt')
+data <- load_ips(dataset = "ips", raw_data = FALSE,
+                 time_period = 2018, language = 'pt')
 ```
 
 # 5) SEEG:
 
 Loads data of estimates of emission of greenhouse gases of Brazilian
-cities.
+cities and states.
 
 According to the “SEEG Brasil” website: all five sectors that are
 sources of emissions - Agriculture, Energy, Land Use Change, Industrial
@@ -467,7 +488,13 @@ for the Land Use Change Sector that has the series from 1990 to 2019.
 
     There are four parameters in this function:
       
-      1. dataset = "seeg"
+      1. dataset: There are six choices:
+      # "seeg": provides all sectors in a same dataframe. Only works with raw_data = TRUE.
+      # "seeg_farming"
+      # "seeg_industry"
+      # "seeg_energy"
+      # "seeg_land"
+      # "seeg_residuals"
       
       2. raw_data: there are two options:
       # TRUE: if you want the raw data.
@@ -486,6 +513,22 @@ data <- load_seeg(dataset = "seeg",
                   raw_data = TRUE,
                   geo_level = "municipality")
   
+
+# Download treated data (raw_data = FALSE) of industry greenhouse gases (dataset = "seeg_industry") by state (geo_level = "state")
+data <- load_seeg(dataset = "seeg_industry", 
+                  raw_data = FALSE,
+                  geo_level = "state")
+
+
+# Download treated data (raw_data = FALSE) of energy greenhouse gases (dataset = "seeg_energy") by state (geo_level = "state")
+data <- load_seeg(dataset = "seeg_energy", 
+                  raw_data = FALSE,
+                  geo_level = "state")
+
+# Download treated data (raw_data = FALSE) of land greenhouse gases (dataset = "seeg_land") by country (geo_level = "country")
+data <- load_seeg(dataset = "seeg_land", 
+                  raw_data = FALSE,
+                  geo_level = "country")
 
 # Download raw data (raw_data = TRUE) of greenhouse gases (dataset = "seeg") by state (geo_level = "state")
 data <- load_seeg(dataset = "seeg", 
@@ -518,10 +561,15 @@ unique perpetrators of infractions.
       5. legal_amazon_only: setting the return of Legal Amazon Data (legal_amazon_only = TRUE) or Country´s Data (legal_amazon_only = FALSE)
 
 ``` r
-# Download treated data (raw_data = FALSE) from the entire country (legal_amazon_only = FALSE)
-data <- load_ibama(dataset = "areas_embargadas", 
-                   raw_data = FALSE, 
-                   legal_amazon_only = FALSE)
+# Download treated data (raw_data = FALSE) from the entire country 
+# (legal_amazon_only = FALSE) in english (language = "eng")
+data <- load_ibama(dataset = "areas_embargadas", raw_data = FALSE, 
+                   language = "eng", legal_amazon_only = FALSE)
+
+# Download raw data (raw_data = TRUE) from Legal Amazon region 
+# (legal_amazon_only = TRUE)
+data <- load_ibama(dataset = "areas_embargadas", raw_data = TRUE, 
+                   legal_amazon_only = TRUE)
 ```
 
 # 7) SIGMINE:
@@ -545,6 +593,11 @@ Agency (ANM) is responsible for this survey.
 ``` r
 # Download raw data (raw_data = TRUE).
 data <- load_sigmine(dataset = 'sigmine_active', raw_data = TRUE)
+
+# Download treated data (raw_data = FALSE) in portuguese (language = "pt").
+data <- load_sigmine(dataset = 'sigmine_active', 
+                     raw_data = FALSE,
+                     language = "pt")
 ```
 
 ## Credits

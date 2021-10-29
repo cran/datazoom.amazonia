@@ -151,10 +151,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The function returns either the raw data or a data frame with aggregates considering, for eachtime-location period, counts for total the number of infractions, infractions that already went to trial, and number of unique perpetrators of infractions.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download raw data from all country</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>raw_ibama_all <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(<span class="at">dataset =</span> <span class="st">&quot;areas_embargadas&quot;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">legal_amazon_only =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated data (raw_data = FALSE) from the entire country </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (legal_amazon_only = FALSE) in english (language = &quot;eng&quot;)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(<span class="at">dataset =</span> <span class="st">&quot;areas_embargadas&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>, <span class="at">legal_amazon_only =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Download raw data (raw_data = TRUE) from Legal Amazon region </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># (legal_amazon_only = TRUE)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(<span class="at">dataset =</span> <span class="st">&quot;areas_embargadas&quot;</span>, <span class="at">raw_data =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">legal_amazon_only =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 
 

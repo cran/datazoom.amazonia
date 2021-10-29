@@ -147,18 +147,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The DEGRAD project uses sattelites to monitor degradation of forest areas. Raw data is available as simple features (sf) objects, read from shapefiles. The project was substituted in 2016 by DETER-B. Accordingly, data is available from 2007 up to 2016.</p>
 <p>Original documentation for this data is very scarce, users beware. Some things to keep in mind are:</p>
 <p>Event data is organized through yearly editions (DEGRAD 2007-2016). Inside a given edition however, there may be data from different years (events that happened in 2015 inside DEGRAD 2016 for example).</p>
-<!-- This package provides degradation data by municipality-year (or municipality-month, when available). It does this by intersecting DEGRAD geometries with IBGE's municipality geometries from the year 2019. CRS metadata however is missing from the original data source. A best effort approach is used and a CRS is assumed (proj4string: "+proj=longlat +ellps=aust_SA +towgs84=-66.8700,4.3700,-38.5200,0.0,0.0,0.0,0.0 +no_defs"). -->
+<p>This package provides degradation data with municipality identification. It does this by intersecting DEGRAD geometries with IBGE’s municipality geometries from the year 2019. CRS metadata however is missing from the original data source. A best effort approach is used and a CRS is assumed (proj4string: “+proj=longlat +ellps=aust_SA +towgs84=-66.8700,4.3700,-38.5200,0.0,0.0,0.0,0.0 +no_defs”).</p>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>Using the package is easy enough:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated data from 2007 to 2016</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>degrad_all <span class="ot">&lt;-</span> <span class="fu">load_degrad</span>(<span class="at">dataset =</span> <span class="st">&quot;degrad&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="dv">2007</span><span class="sc">:</span><span class="dv">2016</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># download raw data from 2007 to 2016</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>raw_degrad_all <span class="ot">&lt;-</span> <span class="fu">load_degrad</span>(<span class="at">dataset =</span> <span class="st">&quot;degrad&quot;</span>, <span class="at">raw_data =</span> <span class="cn">TRUE</span>, <span class="at">time_period =</span> <span class="dv">2007</span><span class="sc">:</span><span class="dv">2016</span>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download raw data (raw_data = TRUE) related to forest degradation from 2010 to 2012 (time_period = 2010:2012). </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_degrad</span>(<span class="at">dataset =</span> <span class="st">&#39;degrad&#39;</span>, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time_period =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2012</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated data (raw_data = FALSE) related to forest degradation from 2013 (time_period = 2013) in portuguese (language = &quot;pt&quot;).</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_degrad</span>(<span class="at">dataset =</span> <span class="st">&#39;degrad&#39;</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time_period =</span> <span class="dv">2013</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">language =</span> <span class="st">&#39;pt&#39;</span>)</span></code></pre></div>
 </div>
 
 

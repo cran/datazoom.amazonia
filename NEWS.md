@@ -1,3 +1,7 @@
+# datazoom.amazonia 0.2.0
+
+* All functions supporting treated data download
+
 # datazoom.amazonia 0.1.0
 
 * All functions supporting raw data download
@@ -37,3 +41,6 @@
 
 # datazoom.amazonia 0.12.0.9000
 * Added functions for IPS data 
+
+# datazoom.amazonia 0.13.0.9000
+* Added functions for SEEG data

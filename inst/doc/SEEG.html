@@ -147,16 +147,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Using data collected from government entities, institutes, research centers, NGOs and other institutions, the estimates are created using the methodology of the Brazilian Inventory of Anthropic Emissions and Removals of Greenhouse Gases, assembled by the Ministry of Science, Technology and Innovation (MCTI), and the directives of Intergovernmental Panel on Climate Change (IPCC). A further detailed explanation of the methodology used is available in the following link (only in Portuguese): <a href="http://seeg.eco.br/notas-metodologicas/" class="uri">http://seeg.eco.br/notas-metodologicas/</a></p>
 <p>The data ranges currently from the years 2000 to 2018. Emissions are divided in five main sources: Agricultural and Cattle Raising, Energy, Changes in Use of Land, Industrial Processses and Residues. All greenhouse gases contained in the national inventory are considered, encompassing CO2, CH4, N2O and the HFCs, with the conversion to carbon equivalence (CO2e) also included, both in the metric of GWP (Global Warming Potential) and GTP (Global Temperature Potential).</p>
 <p>The data is download from the SEEG website in the form of one single file, so the option to select a certain range of years in not available. Also, due to the size of the file, a stable internet connection is necessary, and the function may take time to run.</p>
+<p>There are six available datasets.The “seeg” one contemplates all sectors and the others are each divided by a specific emission source.</p>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>Using the function is easy enough:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download state raw data</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>seeg <span class="ot">&lt;-</span> <span class="fu">load_seeg</span>(<span class="at">dataset =</span> <span class="st">&#39;seeg&#39;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&quot;state&quot;</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># download state raw data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>seeg <span class="ot">&lt;-</span> <span class="fu">load_seeg</span>(<span class="at">dataset =</span> <span class="st">&#39;seeg&#39;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&#39;state&#39;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># download industry state treated data in english</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>seeg <span class="ot">&lt;-</span> <span class="fu">load_seeg</span>(<span class="at">dataset =</span> <span class="st">&#39;seeg_industry&#39;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&#39;state&#39;</span>, <span class="at">language =</span> <span class="st">&#39;eng&#39;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># download country energy treated data in portuguese</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>seeg <span class="ot">=</span> <span class="fu">load_seeg</span>(<span class="at">dataset =</span> <span class="st">&#39;seeg_energy&#39;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&#39;country&#39;</span>, <span class="at">language =</span> <span class="st">&#39;pt&#39;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># download municipality land treated data in english</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>seeg <span class="ot">=</span> <span class="fu">load_seeg</span>(<span class="at">dataset =</span> <span class="st">&#39;seeg_land&#39;</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&#39;municipality&#39;</span>, <span class="at">language =</span> <span class="st">&#39;eng&#39;</span>)</span></code></pre></div>
 </div>
 
 
