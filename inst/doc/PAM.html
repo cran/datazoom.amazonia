@@ -147,6 +147,436 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Permanent farming is characterized by a cycle of long duration, whose harvests may be done multiple times across the years without the need of planting seeds again. Temporary farming, on the other hand, consists of cycles of short and medium duration, which after harvesting require planting seeds again.</p>
 <p>The data also has multiple aggregation levels, such as nationwide, by region, mesoregion and microregion, as well as state and municipality.</p>
 <p>The data available has a yearly frequency and is available from 1974 to the present, with the exception of the four multiple-harvest products, which are only available from 2003. More information can be found on this link (only in Portuguese): <a href="https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9117-producao-agricola-municipal-culturas-temporarias-e-permanentes.html#" class="uri">https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/9117-producao-agricola-municipal-culturas-temporarias-e-permanentes.html#</a>:~:text=A%20pesquisa%20Produ%C3%A7%C3%A3o%20Agr%C3%ADcola%20Municipal,s%C3%A3o%20da%20cesta%20b%C3%A1sica%20do</p>
+<p>The datasets supported are shown in the tables below, made up of both the original databases and their narrower subsets. Note that downloading only specific crops is considerably faster. First, the datasets provided by IBGE in their entirety:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">dataset</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">all_crops</td>
+</tr>
+<tr class="even">
+<td align="left">temporary_crops</td>
+</tr>
+<tr class="odd">
+<td align="left">permanent_crops</td>
+</tr>
+<tr class="even">
+<td align="left">corn</td>
+</tr>
+<tr class="odd">
+<td align="left">potato</td>
+</tr>
+<tr class="even">
+<td align="left">peanut</td>
+</tr>
+<tr class="odd">
+<td align="left">beans</td>
+</tr>
+</tbody>
+</table>
+<p>Datasets generated from Temporary Crops:</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="34%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">dataset</th>
+<th align="center">Name (pt)</th>
+<th align="center">Name (eng)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">pineapple</td>
+<td align="center">Abacaxi</td>
+<td align="center">Pineapple</td>
+</tr>
+<tr class="even">
+<td align="left">alfafa</td>
+<td align="center">Alfafa Fenada</td>
+<td align="center">Alfafa Fenada</td>
+</tr>
+<tr class="odd">
+<td align="left">cotton_herbaceous</td>
+<td align="center">Algodao Herbaceo (em Caroco)</td>
+<td align="center">Herbaceous Cotton (in Caroco)</td>
+</tr>
+<tr class="even">
+<td align="left">garlic</td>
+<td align="center">Alho</td>
+<td align="center">Garlic</td>
+</tr>
+<tr class="odd">
+<td align="left">peanut_temporary</td>
+<td align="center">Amendoim (em Casca)</td>
+<td align="center">Peanuts (in Shell)</td>
+</tr>
+<tr class="even">
+<td align="left">rice</td>
+<td align="center">Arroz (em Casca)</td>
+<td align="center">Rice (in husk)</td>
+</tr>
+<tr class="odd">
+<td align="left">oats</td>
+<td align="center">Aveia (em Grao)</td>
+<td align="center">Oats (in grain)</td>
+</tr>
+<tr class="even">
+<td align="left">sweet_potato</td>
+<td align="center">Batata Doce</td>
+<td align="center">Sweet potato</td>
+</tr>
+<tr class="odd">
+<td align="left">potato_temporary</td>
+<td align="center">Batata Inglesa</td>
+<td align="center">English potato</td>
+</tr>
+<tr class="even">
+<td align="left">sugar_cane</td>
+<td align="center">Cana de Acucar</td>
+<td align="center">Sugar cane</td>
+</tr>
+<tr class="odd">
+<td align="left">forage_cane</td>
+<td align="center">Cana para Forragem</td>
+<td align="center">Forage cane</td>
+</tr>
+<tr class="even">
+<td align="left">onion</td>
+<td align="center">Cebola</td>
+<td align="center">Onion</td>
+</tr>
+<tr class="odd">
+<td align="left">rye</td>
+<td align="center">Centeio (em Grao)</td>
+<td align="center">Rye (in grain)</td>
+</tr>
+<tr class="even">
+<td align="left">barley</td>
+<td align="center">Cevada (em Grao)</td>
+<td align="center">Barley (in Grain)</td>
+</tr>
+<tr class="odd">
+<td align="left">pea</td>
+<td align="center">Ervilha (em Grao)</td>
+<td align="center">Pea (in Grain)</td>
+</tr>
+<tr class="even">
+<td align="left">broad_bean</td>
+<td align="center">Fava (em Grao)</td>
+<td align="center">Broad Bean (in Grain)</td>
+</tr>
+<tr class="odd">
+<td align="left">beans_temporary</td>
+<td align="center">Feijao (em Grao)</td>
+<td align="center">Beans (in Grain)</td>
+</tr>
+<tr class="even">
+<td align="left">tobacco</td>
+<td align="center">Fumo (em Folha)</td>
+<td align="center">Smoke (in Sheet)</td>
+</tr>
+<tr class="odd">
+<td align="left">sunflower_seeds</td>
+<td align="center">Girassol (em Grao)</td>
+<td align="center">Sunflower (in Grain)</td>
+</tr>
+<tr class="even">
+<td align="left">jute_fiber</td>
+<td align="center">Juta (Fibra)</td>
+<td align="center">Jute (Fiber)</td>
+</tr>
+<tr class="odd">
+<td align="left">linen_seeds</td>
+<td align="center">Linho (Semente)</td>
+<td align="center">Linen (Seed)</td>
+</tr>
+<tr class="even">
+<td align="left">malva_fiber</td>
+<td align="center">Malva (Fibra)</td>
+<td align="center">Malva (Fiber)</td>
+</tr>
+<tr class="odd">
+<td align="left">castor_bean</td>
+<td align="center">Mamona (Baga)</td>
+<td align="center">Castor bean (Berry)</td>
+</tr>
+<tr class="even">
+<td align="left">cassava</td>
+<td align="center">Mandioca</td>
+<td align="center">Cassava</td>
+</tr>
+<tr class="odd">
+<td align="left">watermelon</td>
+<td align="center">Melancia</td>
+<td align="center">watermelon</td>
+</tr>
+<tr class="even">
+<td align="left">melon</td>
+<td align="center">Melao</td>
+<td align="center">Melon</td>
+</tr>
+<tr class="odd">
+<td align="left">corn_temporary</td>
+<td align="center">Milho (em Grao)</td>
+<td align="center">corn (in grain)</td>
+</tr>
+<tr class="even">
+<td align="left">ramie_fiber</td>
+<td align="center">Rami (Fibra)</td>
+<td align="center">Ramie (Fiber)</td>
+</tr>
+<tr class="odd">
+<td align="left">soybean</td>
+<td align="center">Soja (em Grao)</td>
+<td align="center">Soybean (in grain)</td>
+</tr>
+<tr class="even">
+<td align="left">sorghum</td>
+<td align="center">Sorgo (em Grao)</td>
+<td align="center">Sorghum (in Grain)</td>
+</tr>
+<tr class="odd">
+<td align="left">tomato</td>
+<td align="center">Tomate</td>
+<td align="center">Tomato</td>
+</tr>
+<tr class="even">
+<td align="left">wheat</td>
+<td align="center">Trigo (em Grao)</td>
+<td align="center">Wheat in grain)</td>
+</tr>
+<tr class="odd">
+<td align="left">triticale</td>
+<td align="center">Triticale (em Grao)</td>
+<td align="center">Triticale (in grain)</td>
+</tr>
+<tr class="even">
+<td align="left">temporary_total</td>
+<td align="center">Total</td>
+<td align="center">Total</td>
+</tr>
+</tbody>
+</table>
+<p>Datasets generated from Permanent Crops:</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="34%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">dataset</th>
+<th align="center">Name (pt)</th>
+<th align="center">Name (eng)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">avocado</td>
+<td align="center">Abacate</td>
+<td align="center">Avocado</td>
+</tr>
+<tr class="even">
+<td align="left">cotton_arboreo</td>
+<td align="center">Algodao Arboreo (em Caroco)</td>
+<td align="center">Arboreo cotton (in Caroco)</td>
+</tr>
+<tr class="odd">
+<td align="left">acai</td>
+<td align="center">Acai</td>
+<td align="center">Acai</td>
+</tr>
+<tr class="even">
+<td align="left">olive</td>
+<td align="center">Azeitona</td>
+<td align="center">Olive</td>
+</tr>
+<tr class="odd">
+<td align="left">banana</td>
+<td align="center">Banana (Cacho)</td>
+<td align="center">Banana (Bunch)</td>
+</tr>
+<tr class="even">
+<td align="left">rubber_coagulated_latex</td>
+<td align="center">Borracha (Latex Coagulado)</td>
+<td align="center">Rubber (Coagulated Latex)</td>
+</tr>
+<tr class="odd">
+<td align="left">rubber_liquid_latex</td>
+<td align="center">Borracha (Latex Liquido)</td>
+<td align="center">Rubber (Liquid Latex)</td>
+</tr>
+<tr class="even">
+<td align="left">cocoa_beans</td>
+<td align="center">Cacau (em Amendoa)</td>
+<td align="center">Cocoa (in Almonds)</td>
+</tr>
+<tr class="odd">
+<td align="left">coffee_total</td>
+<td align="center">Cafe (em Grao) Total</td>
+<td align="center">Coffee (in Grain) Total</td>
+</tr>
+<tr class="even">
+<td align="left">coffee_arabica</td>
+<td align="center">Cafe (em Grao) Arabica</td>
+<td align="center">Cafe (in Grao) Arabica</td>
+</tr>
+<tr class="odd">
+<td align="left">coffee_canephora</td>
+<td align="center">Cafe (em Grao) Canephora</td>
+<td align="center">Cafe (in Grain) Canephora</td>
+</tr>
+<tr class="even">
+<td align="left">cashew</td>
+<td align="center">Caju</td>
+<td align="center">Cashew</td>
+</tr>
+<tr class="odd">
+<td align="left">khaki</td>
+<td align="center">Caqui</td>
+<td align="center">Khaki</td>
+</tr>
+<tr class="even">
+<td align="left">cashew_nut</td>
+<td align="center">Castanha de Caju</td>
+<td align="center">Cashew Nuts</td>
+</tr>
+<tr class="odd">
+<td align="left">india_tea</td>
+<td align="center">Cha da India (Folha Verde)</td>
+<td align="center">India Tea (Leaf)</td>
+</tr>
+<tr class="even">
+<td align="left">coconut</td>
+<td align="center">Coco da Baia</td>
+<td align="center">Coconut</td>
+</tr>
+<tr class="odd">
+<td align="left">coconut_bunch</td>
+<td align="center">Dende (Cacho de Coco)</td>
+<td align="center">Coconut Bunch</td>
+</tr>
+<tr class="even">
+<td align="left">yerba_mate</td>
+<td align="center">Erva Mate (Folha Verde)</td>
+<td align="center">Mate Herb (Leaf)</td>
+</tr>
+<tr class="odd">
+<td align="left">fig</td>
+<td align="center">Figo</td>
+<td align="center">Fig</td>
+</tr>
+<tr class="even">
+<td align="left">guava</td>
+<td align="center">Goiaba</td>
+<td align="center">Guava</td>
+</tr>
+<tr class="odd">
+<td align="left">guarana_seeds</td>
+<td align="center">Guarana (Semente)</td>
+<td align="center">Guarana (Seed)</td>
+</tr>
+<tr class="even">
+<td align="left">orange</td>
+<td align="center">Laranja</td>
+<td align="center">Orange</td>
+</tr>
+<tr class="odd">
+<td align="left">lemon</td>
+<td align="center">Limao</td>
+<td align="center">Lemon</td>
+</tr>
+<tr class="even">
+<td align="left">apple</td>
+<td align="center">Maca</td>
+<td align="center">Apple</td>
+</tr>
+<tr class="odd">
+<td align="left">papaya</td>
+<td align="center">Mamao</td>
+<td align="center">Papaya</td>
+</tr>
+<tr class="even">
+<td align="left">mango</td>
+<td align="center">Manga</td>
+<td align="center">Mango</td>
+</tr>
+<tr class="odd">
+<td align="left">passion_fruit</td>
+<td align="center">Maracuja</td>
+<td align="center">Passion fruit</td>
+</tr>
+<tr class="even">
+<td align="left">quince</td>
+<td align="center">Marmelo</td>
+<td align="center">Quince</td>
+</tr>
+<tr class="odd">
+<td align="left">walnut</td>
+<td align="center">Noz (Fruto Seco)</td>
+<td align="center">Walnut (Dry Fruit)</td>
+</tr>
+<tr class="even">
+<td align="left">heart_of_palm</td>
+<td align="center">Palmito</td>
+<td align="center">Palm heart</td>
+</tr>
+<tr class="odd">
+<td align="left">pear</td>
+<td align="center">Pera</td>
+<td align="center">Pear</td>
+</tr>
+<tr class="even">
+<td align="left">peach</td>
+<td align="center">Pessego</td>
+<td align="center">Peach</td>
+</tr>
+<tr class="odd">
+<td align="left">black_pepper</td>
+<td align="center">Pimenta do Reino</td>
+<td align="center">Black pepper</td>
+</tr>
+<tr class="even">
+<td align="left">sisal_or_agave</td>
+<td align="center">Sisal ou Agave (Fibra)</td>
+<td align="center">Sisal or Agave (Fiber)</td>
+</tr>
+<tr class="odd">
+<td align="left">tangerine</td>
+<td align="center">Tangerina</td>
+<td align="center">Tangerine</td>
+</tr>
+<tr class="even">
+<td align="left">tung</td>
+<td align="center">Tungue (Fruto Seco)</td>
+<td align="center">Tung (Dry Fruit)</td>
+</tr>
+<tr class="odd">
+<td align="left">annatto_seeds</td>
+<td align="center">Urucum (Semente)</td>
+<td align="center">Annatto (Seed)</td>
+</tr>
+<tr class="even">
+<td align="left">grape</td>
+<td align="center">Uva</td>
+<td align="center">Grape</td>
+</tr>
+<tr class="odd">
+<td align="left">permanent_total</td>
+<td align="center">Total</td>
+<td align="center">Total</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>

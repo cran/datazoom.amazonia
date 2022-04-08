@@ -22,14 +22,16 @@ load_pevs(dataset = NULL, raw_data, geo_level, time_period, language = "eng")
 A \code{tibble} consisting of geographic units that present positive values for any of the variables in the dataset.
 }
 \description{
-Loads information on the amount and value of the production of the exploitation of native plant resources and planted forest massifs, as well as existing total and harvested areas of forest crops. Survey is done at the municipal level and data is available from 1986 to 2019. See \url{https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fishing/18374-forestry-activities.html?=&t=o-que-e}
+Loads information on the amount and value of the production of the exploitation of native plant resources and planted forest massifs, as well as existing total and harvested areas of forest crops. Survey is done at the municipal level and data is available from 1986 to 2020. See \url{https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fishing/18374-forestry-activities.html?=&t=o-que-e}
 }
 \examples{
 \dontrun{
 # download state raw data from 2012 for silviculture
-pevs_silvi <- load_pevs(dataset = 'pevs_silviculture',
-                        raw_data = TRUE,
-                        geo_level = 'state',
-                        time_period = 2012)
+pevs_silvi <- load_pevs(
+  dataset = "pevs_silviculture",
+  raw_data = TRUE,
+  geo_level = "state",
+  time_period = 2012
+)
 }
 }

@@ -149,7 +149,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>Using the function is easy enough:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Cover data in english</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_cover&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Transition data in portuguese</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_transition&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Grazing Quality data in portuguese</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_grazing_quality&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="st">&quot;all&quot;</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Irrigation data in english</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_irrigation&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="st">&quot;all&quot;</span>, <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas deforestauon/regeneration data in portuguese</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_deforestation_regeneration&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, <span class="at">time_period =</span> <span class="dv">2011</span>, <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>)</span></code></pre></div>
 </div>
 
 

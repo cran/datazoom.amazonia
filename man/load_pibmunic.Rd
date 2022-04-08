@@ -31,15 +31,17 @@ load_pibmunic(
 A \code{tibble} with the selected data.
 }
 \description{
-Loads information on gross domestic product at current prices, taxes, net of subsidies, on products at current prices and gross value added at current prices, total and by economic activity, and respective shares. Survey is done at Country, state and municipality level and data is available from 2002 to 2018.
+Loads information on gross domestic product at current prices, taxes, net of subsidies, on products at current prices and gross value added at current prices, total and by economic activity, and respective shares. Survey is done at Country, state and municipality level and data is available from 2002 to 2019.
 }
 \examples{
 \dontrun{
 # download state raw data from 2012 for all country
-pibmunic <- load_pibmunic(dataset = 'pibmunic',
-                          raw_data = TRUE,
-                          geo_level = 'state',
-                          time_period = 2012,
-                          legal_amazon_only = FALSE)
+pibmunic <- load_pibmunic(
+  dataset = "pibmunic",
+  raw_data = TRUE,
+  geo_level = "state",
+  time_period = 2012,
+  legal_amazon_only = FALSE
+)
 }
 }

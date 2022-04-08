@@ -13,9 +13,11 @@
 #' @examples
 #' \dontrun{
 #' # download raw data from all country
-#' raw_ibama_all <- load_ibama(dataset = "areas_embargadas",
-#'                             raw_data = TRUE,
-#'                             legal_amazon_only = FALSE)
+#' raw_ibama_all <- load_ibama(
+#'   dataset = "areas_embargadas",
+#'   raw_data = TRUE,
+#'   legal_amazon_only = FALSE
+#' )
 #' }
 #'
 #' @importFrom magrittr %>%
@@ -26,68 +28,75 @@ load_ibama <- function(dataset = "areas_embargadas",
                        raw_data,
                        geo_level = "municipality",
                        language = "eng",
-                       legal_amazon_only = FALSE){
-
-
-  survey <- link <- AMZ_LEGAL <- codigo_ibge_municipio_embargo <- NULL
+                       legal_amazon_only = FALSE) {
+  survey <- link <- legal_amazon <- codigo_ibge_municipio_embargo <- NULL
   municipio_embargo <- uf_embargo <- julgamento <- infracao <- data_de_insercao_na_lista <- NULL
   cpf_ou_cnpj <- cod_municipio <- ano <- mes <- NULL
   month <- year <- municipality_code <- n_infracoes <- n_ja_julgado <- NULL
   n_cpf_cnpj_unicos <- NULL
+  municipio_infracao <- uf_infracao <- uf <- NULL
+  municipio <- name_muni <- code_muni <- municipality <- NULL
 
   #############################
   ## Define Basic Parameters ##
   #############################
 
-  param=list()
-  param$dataset = dataset
-  param$geo_level = geo_level
-  param$language = language
-  param$raw_data = raw_data
+  param <- list()
+  param$dataset <- dataset
+  param$geo_level <- geo_level
+  param$language <- language
+  param$raw_data <- raw_data
 
-  param$survey_name = datasets_link() %>%
+  param$survey_name <- datasets_link() %>%
     dplyr::filter(dataset == param$dataset) %>%
     dplyr::select(survey) %>%
     unlist()
 
-  param$url = datasets_link() %>%
+  param$url <- datasets_link() %>%
     dplyr::filter(dataset == param$dataset) %>%
     dplyr::select(link) %>%
     unlist()
 
   ## Dataset
 
-  if (is.null(param$dataset)){stop('Missing Dataset!')}
-  if (is.null(param$raw_data)){stop('Missing TRUE/FALSE for Raw Data')}
+  if (is.null(param$dataset)) {
+    stop("Missing Dataset!")
+  }
+  if (is.null(param$raw_data)) {
+    stop("Missing TRUE/FALSE for Raw Data")
+  }
 
 
   ##############
   ## Download ##
   ##############
 
-  dat <- external_download(dataset = param$dataset,
-                           source = 'ibama',
-                           geo_level = param$geo_level)
+  dat <- external_download(
+    dataset = param$dataset,
+    source = "ibama",
+    geo_level = param$geo_level
+  )
 
 
   ## Filter for Legal Amazon
   if (legal_amazon_only) {
-    legal_amazon_filtered <- legal_amazon %>% dplyr::filter(AMZ_LEGAL == 1)
+    legal_amazon_filtered <- municipalities %>% dplyr::filter(legal_amazon == 1)
 
     dat <- dat %>%
-      dplyr::filter(codigo_ibge_municipio_embargo %in% unique(legal_amazon_filtered$CD_MUN))
+      dplyr::filter(municipio_infracao %in% unique(legal_amazon_filtered$name_muni))
   }
 
 
   ## Return Raw Data
-  if (raw_data == TRUE){return(dat)}
+  if (raw_data == TRUE) {
+    return(dat)
+  }
 
 
   ## Aggregate to municipality-level
   dat <- dat %>%
     dplyr::select(
-      municipio_embargo, uf_embargo,
-      codigo_ibge_municipio_embargo, julgamento,
+      municipio_infracao, uf_infracao, julgamento,
       infracao, data_de_insercao_na_lista,
       cpf_ou_cnpj
     ) %>%
@@ -98,12 +107,10 @@ load_ibama <- function(dataset = "areas_embargadas",
       mes = lubridate::month(data_de_insercao_na_lista)
     ) %>%
     dplyr::rename(
-      municipio = municipio_embargo,
-      uf = uf_embargo,
-      cod_municipio = codigo_ibge_municipio_embargo
+      municipio = municipio_infracao,
+      uf = uf_infracao
     ) %>%
-    dplyr::mutate(cod_municipio = as.numeric(cod_municipio)) %>%
-    dplyr::group_by(cod_municipio, ano, mes) %>%
+    dplyr::group_by(uf, municipio, ano, mes) %>%
     dplyr::summarise(
       n_ja_julgado = sum(!is.na(julgamento), na.rm = TRUE),
       n_infracoes = dplyr::n(),
@@ -111,26 +118,43 @@ load_ibama <- function(dataset = "areas_embargadas",
       .groups = "drop"
     )
 
-  if (param$language == 'pt'){
+  ## Adding IBGE municipality codes
 
-    dat_mod = dat %>%
-      dplyr::select(ano, mes, cod_municipio,
-                    n_ja_julgado, n_infracoes, n_cpf_cnpj_unicos
+  municipalities <- municipalities %>%
+    dplyr::select(
+      municipio = name_muni,
+      cod_municipio = code_muni
+    )
+
+  dat <- dat %>%
+    dplyr::left_join(municipalities, by = "municipio")
+
+  ## Final variables and translation
+
+  if (param$language == "pt") {
+    dat_mod <- dat %>%
+      dplyr::select(
+        ano, mes, uf, municipio, cod_municipio,
+        n_ja_julgado, n_infracoes, n_cpf_cnpj_unicos
       ) %>%
-      dplyr::arrange(ano, mes, cod_municipio)
-
+      dplyr::arrange(ano, mes, municipio)
   }
 
-  if (param$language == 'eng'){
-
-    dat_mod = dat %>%
-      dplyr::select(year = ano, month = mes, municipality_code = cod_municipio,
-                    n_already_judged = n_ja_julgado,
-                    n_infringement = n_infracoes,
-                    n_unique_cpf_cnpj = n_cpf_cnpj_unicos
+  if (param$language == "eng") {
+    dat_mod <- dat %>%
+      dplyr::select(
+        year = ano, month = mes, state = uf,
+        municipality = municipio, municipality_code = cod_municipio,
+        n_already_judged = n_ja_julgado,
+        n_infringement = n_infracoes,
+        n_unique_cpf_cnpj = n_cpf_cnpj_unicos
       ) %>%
-      dplyr::arrange(year, month, municipality_code)
-
+      dplyr::arrange(year, month, municipality)
   }
 
+  ####################
+  ## Returning Data ##
+  ####################
+
+  return(dat_mod)
 }
