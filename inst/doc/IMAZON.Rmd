@@ -1,0 +1,37 @@
+---
+title: "IMAZON"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{IMAZON}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Loads data categorizing each municipality by the level of deforestation pressure it faces. The categories used by Imazon have three levels, ranging from 0 to 3.
+
+***
+**Options:**
+
+  1. **dataset**: `"imazon_shp"`
+
+  2. **raw_data**: there are two options:
+      * `TRUE`: if you want the data as it is originally.
+      * `FALSE`: if you want the treated version of the data.
+
+  3. **language**: you can choose between Portuguese `("pt")` and English `("eng")`
+  
+***
+
+**Examples:**
+
+```{r eval=FALSE}
+# Download treated data
+data <- load_imazon(raw_data = FALSE)
+```

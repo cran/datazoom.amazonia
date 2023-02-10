@@ -4,11 +4,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ---- eval = FALSE------------------------------------------------------------
-#  library(datazoom.amazonia)
-#  
-#  # Download treated trade data in portuguese
-#  
-#  baci = load_baci(dataset = "HS92", raw_data = FALSE, time_period = 2018,
-#                   language = "pt")
+## ----eval=FALSE---------------------------------------------------------------
+#  # download treated data for 2016 (takes a long time to download)
+#  clean_baci <- load_baci(
+#    raw_data = FALSE,
+#    time_period = 2016
+#  )
 

@@ -5,43 +5,55 @@
 \title{MAPBIOMAS - The Annual Land Cover and Use Mapping Project in Brazil}
 \usage{
 load_mapbiomas(
-  dataset = NULL,
-  raw_data = NULL,
+  dataset,
+  raw_data = FALSE,
   geo_level = "municipality",
-  time_period = "all",
   language = "eng",
-  time_id = "year",
   cover_level = 1
 )
 }
 \arguments{
-\item{dataset}{A dataset name ("mapbiomas_cover", "mapbiomas_transition", "mapbiomas_irrigation", "mapbiomas_deforestation_regeneration", "mapbiomas_grazing_quality")}
+\item{dataset}{A dataset name ("mapbiomas_cover", "mapbiomas_transition", "mapbiomas_irrigation", "mapbiomas_deforestation_regeneration", "mapbiomas_grazing_quality", or "mapbiomas_mining")}
 
-\item{raw_data}{A \code{boolean} setting the return of raw or processed data}
+\item{raw_data}{A \code{boolean} setting the return of raw (\code{TRUE}) or processed (\code{FALSE}) data.}
 
-\item{geo_level}{A \code{string} that defines the geographic level of the data. Can be only "municipality".}
+\item{geo_level}{A \code{string} that defines the geographic level of the data.
+\itemize{
+\item For datasets "mapbiomas_cover" and "mapbiomas_transition", can be "municipality" or "state" (faster download).
+\item For dataset "mapbiomas_mining", can be "biome" or "indigenous_land".
+}}
 
-\item{time_period}{A \code{numeric} indicating what years will the data be loaded. Can be only "all".}
+\item{language}{A \code{string} that indicates in which language the data will be returned. Portuguese ("pt") and English ("eng") are supported.}
 
-\item{language}{A \code{string} that indicates in which language the data will be returned. Currently, only Portuguese ("pt") and English ("eng") are supported.}
-
-\item{time_id}{A \code{string} that indicates the time criteria for the data loaded. Can be "year" or "month". Defaults to year.}
-
-\item{cover_level}{A \code{numeric} that indicates the cover aggregation level. Can be "0", "1", "2", "3" or "4".}
+\item{cover_level}{A \code{numeric} or \code{string} that indicates the cover aggregation level. Can be "0", "1", "2", "3", "4", or "none", which means no aggregation. Aggregation only supported for "mapbiomas_cover" and "mapbiomas_grazing_quality" datasets.}
 }
 \value{
-A \code{tibble} with the selected data.
+A \code{tibble}.
 }
 \description{
 Loads information about land cover and use
 }
 \examples{
 \dontrun{
-# download treated data from mapbiomas_grazing_quality
-treated_mapbiomas_grazing <- load_mapbiomas(
-  dataset = "mapbiomas_grazing_quality",
-  raw_data = FALSE, geo_level = "municipality",
-  time_period = "all", language = "pt"
+# download treated Mapbiomas Cover data in english at the highest aggregation level
+data <- load_mapbiomas(
+  dataset = "mapbiomas_cover",
+  raw_data = FALSE,
+  geo_level = "municipality",
+  language = "eng",
+  cover_level = 0
+)
+
+# download treated Mapbiomas Transition data in portuguese
+data <- load_mapbiomas(
+  dataset = "mapbiomas_transition", raw_data = FALSE,
+  geo_level = "state", language = "pt"
+)
+
+# download treated data on mining on indigenous lands
+data <- load_mapbiomas("mapbiomas_mining",
+  raw_data = FALSE,
+  geo_level = "indigenous_land"
 )
 }
 

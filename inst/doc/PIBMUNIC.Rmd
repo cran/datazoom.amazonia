@@ -7,42 +7,38 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-## The Dataset
+Loads IBGE information on gross domestic product at current prices, taxes, net of subsidies, on products at current prices and gross value added at current prices, total and by economic activity, and respective shares. Data is available at country, state and municipality level and from 2002 to 2018.
 
-GDP data at current prices is from IBGE's "Produto Interno Bruto dos Municípios" (aka PIB-Munic). The data is available between 2002 and 2018.
+***
+**Options:**
 
-The definition of the Brazilian Legal Amazon at the municipality level is taken from IBGE's "Mapas Regionais - Amazônia Legal" available here: https://www.ibge.gov.br/geociencias/cartas-e-mapas/mapas-regionais/15819-amazonia-legal.html?=&t=o-que-e. 
+  1. **dataset**: `"pibmunic"`
 
-## Usage
+  2. **raw_data**: there are two options:
+      * `TRUE`: if you want the data as it is originally.
+      * `FALSE`: if you want the treated version of the data. 
+      
+  3. **geo_level**: `"country"`, `"state"`, or `"municipality"`    
+  
+  4. **time_period**: picks the years for which the data will be downloaded
 
-Using the function is easy enough:
+  5. **language**: you can choose between Portuguese `("pt")` and English `("eng")`
+  
+***
 
-```{r,eval=FALSE}
-library(datazoom.amazonia)
+**Examples:**
 
-# Download raw data (raw_data = TRUE) on gross domestic product 
-# (dataset = 'pibmunic') from the entire country (legal_amazon_only = FALSE) 
-# by state (geo_level = 'state') from 2012 (time_period = 2012)
-data <- load_pibmunic(dataset = 'pibmunic',
-                      raw_data = TRUE,
-                      geo_level = 'state',
-                      time_period = 2012,
-                      legal_amazon_only = FALSE)
-
-# Download treated data (raw_data = FALSE) on gross domestic product 
-# (dataset = 'pibmunic') from the Legal Amazon (legal_amazon_only = TRUE) 
-# by municipality (geo_level = 'municipality') from 2012 (time_period = 2012).
-data <- load_pibmunic(dataset = 'pibmunic',
-                      raw_data = FALSE,
-                      geo_level = 'municipality',
-                      time_period = 2012,
-                      legal_amazon_only = TRUE)
+```{r, eval = FALSE}
+# download treated municipal GDP data at the state level for 2010 to 2012
+data <- load_pibmunic(raw_data = FALSE,
+                      geo_level = "state",
+                      time_period = 2010:2012)
 ```
 

@@ -1,0 +1,37 @@
+---
+title: "IEMA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{IEMA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Data from the Institute of Environment and Water Resources (IEMA), documenting the number of people without access to eletric energy throughout the Amazon region in the year 2018.
+
+***
+**Options:**
+
+  1. **dataset**: `"iema"`
+
+  2. **raw_data**: there are two options:
+      * `TRUE`: if you want the data as it is originally.
+      * `FALSE`: if you want the treated version of the data.
+
+  3. **language**: you can choose between Portuguese `("pt")` and English `("eng")`
+  
+***
+
+**Examples:**  
+  
+```{r eval=FALSE}
+# Download treated data
+data <- load_iema(raw_data = FALSE)
+```
