@@ -356,7 +356,7 @@ municipalities</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>dataset</strong>: there are three possible choices.</p>
 <ul>
-<li><code>&quot;areas_embargadas&quot;</code>: embargoed areas</li>
+<li><code>&quot;embargoed_areas&quot;</code>: embargoed areas</li>
 <li><code>&quot;distributed_fines&quot;</code>: fines that have not been paid by
 individuals or corporations</li>
 <li><code>&quot;collected_fines&quot;</code>: fines that have been paid by
@@ -371,21 +371,25 @@ data.</li>
 <li><p><strong>states</strong>: specifies for which states to download
 the data. It is “all” by default, but can be a single state such as
 <code>&quot;AC&quot;</code> or any vector such as <code>c(&quot;AC&quot;, &quot;AM&quot;)</code>. Does
-not apply to the <code>&quot;areas_embargadas&quot;</code> dataset.</p></li>
+not apply to the <code>&quot;embargoed_areas&quot;</code> dataset.</p></li>
 <li><p><strong>language</strong>: you can choose between Portuguese
 <code>(&quot;pt&quot;)</code> and English <code>(&quot;eng&quot;)</code></p></li>
 </ol>
 <hr />
 <p><strong>Examples:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated embargoes data (raw_data = FALSE) in english (language = &quot;eng&quot;)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(<span class="at">dataset =</span> <span class="st">&quot;areas_embargadas&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated collected fines data from &quot;BA&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(<span class="at">dataset =</span> <span class="st">&quot;collected_fines&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">states =</span> <span class="st">&quot;BA&quot;</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(datazoom.amazonia)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># Download treated embargoes data (raw_data = FALSE) in english (language = &quot;eng&quot;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;embargoed_areas&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;eng&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Download treated collected fines data from &quot;BA&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ibama</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;collected_fines&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">states =</span> <span class="st">&quot;BA&quot;</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>)</span></code></pre></div>
 
 
 

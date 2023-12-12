@@ -370,12 +370,14 @@ vector with some combination thereof</p></li>
 </ol>
 <hr />
 <p><strong>Examples:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download raw data from 2014 </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ips</span>(<span class="at">dataset =</span> <span class="st">&quot;all&quot;</span>, <span class="at">raw_data =</span> <span class="cn">TRUE</span>, <span class="at">time_period =</span> <span class="dv">2014</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated deforest data from 2018 in portuguese</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ips</span>(<span class="at">dataset =</span> <span class="st">&quot;deforest&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">time_period =</span> <span class="dv">2018</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Download raw data from 2014</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ips</span>(<span class="at">dataset =</span> <span class="st">&quot;all&quot;</span>, <span class="at">raw_data =</span> <span class="cn">TRUE</span>, <span class="at">time_period =</span> <span class="dv">2014</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Download treated deforest data from 2018 in portuguese</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_ips</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;deforest&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">time_period =</span> <span class="dv">2018</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>)</span></code></pre></div>
 
 
 

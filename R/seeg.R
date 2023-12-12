@@ -28,8 +28,6 @@
 #' }
 load_seeg <- function(dataset, raw_data = FALSE,
                       geo_level, language = "eng") {
-
-
   # Checking for googledrive package (in Suggests)
 
   if (!requireNamespace("googledrive", quietly = TRUE)) {
@@ -44,7 +42,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   ##############################
 
   survey <- link <- ibge <- x2000 <- x2018 <- id_code <- tipo_de_emissao <- NULL
-  city <- state <- nivel_1 <- municipio <- territorio <- x1970 <- x2019 <- NULL
+  city <- state <- nivel_1 <- municipio <- territorio <- x1970 <- x2021 <- NULL
   nivel_1_setor <- nivel_2 <- nivel_3 <- nivel_4 <- nivel_5 <- nivel_6 <- NULL
   produto <- atividade_economica <- Valor <- Ano <- estado <- setor <- NULL
   processos_geradores_emissoes <- fonte_de_emissoes <- emissores <- gas <- NULL
@@ -60,10 +58,15 @@ load_seeg <- function(dataset, raw_data = FALSE,
   #############################
 
   param <- list()
+  param$source <- "seeg"
   param$dataset <- dataset
   param$geo_level <- geo_level
   param$language <- language
   param$raw_data <- raw_data
+
+  # check if dataset and geo_level are supported
+
+  check_params(param)
 
   if (!is.numeric(param$dataset)) {
     param$code <- datasets_link() %>%
@@ -112,7 +115,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
   dat <- external_download(
     dataset = param$dataset,
-    source = "seeg",
+    source = param$source,
     geo_level = param$geo_level,
     sheet = sheet
   )
@@ -188,12 +191,11 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
 
   if (param$dataset == "seeg_farming" & param$geo_level %in% c("country", "state") & param$language == "pt") {
-
     ## Create Longer Data - Years as a Variable
 
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "Ano",
         names_prefix = "x",
         values_to = "Valor"
@@ -279,12 +281,11 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
 
   if (param$dataset == "seeg_industry" & param$geo_level %in% c("country", "state") & param$language == "pt") {
-
     ## Create Longer Data - Years as a Variable
 
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "Ano",
         names_prefix = "x",
         values_to = "Valor"
@@ -305,16 +306,6 @@ load_seeg <- function(dataset, raw_data = FALSE,
         atividade_economica == "MET" ~ "Industria Metaleira",
         atividade_economica == "Outra_IND" ~ "Outra Industria",
         atividade_economica == "HFC" ~ "HFC"
-      )) %>%
-      dplyr::mutate(estado = dplyr::case_when(
-        estado == "BA" ~ "BA",
-        estado == "ES" ~ "ES",
-        estado == "MA" ~ "MA",
-        estado == "NA" ~ as.character(NA),
-        estado == "PA" ~ "PA",
-        estado == "RJ" ~ "RJ",
-        estado == "RS" ~ "RS",
-        estado == "SP" ~ "SP"
       )) %>%
       dplyr::mutate(produto = dplyr::case_when(
         produto == "ALU" ~ "Aluminio",
@@ -376,12 +367,11 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
 
   if (param$dataset == "seeg_energy" & param$geo_level %in% c("country", "state") & param$language == "pt") {
-
     ## Create Longer Data - Years as a Variable
 
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "Ano",
         names_prefix = "x",
         values_to = "Valor"
@@ -465,7 +455,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "Ano",
         names_prefix = "x",
         values_to = "Valor"
@@ -543,12 +533,11 @@ load_seeg <- function(dataset, raw_data = FALSE,
 
 
   if (param$dataset == "seeg_residuals" & param$geo_level %in% c("country", "state") & param$language == "pt") {
-
     ## Create Longer Data - Years as a Variable
 
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "Ano",
         names_prefix = "x",
         values_to = "Valor"
@@ -738,7 +727,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   if (param$dataset == "seeg_energy" & param$geo_level %in% c("country", "state") & param$language == "eng") {
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "year",
         names_prefix = "x",
         values_to = "value"
@@ -995,7 +984,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   if (param$dataset == "seeg_industry" & param$geo_level %in% c("country", "state") & param$language == "eng") {
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "year",
         names_prefix = "x",
         values_to = "value"
@@ -1188,7 +1177,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   if (param$dataset == "seeg_residuals" & param$geo_level %in% c("country", "state") & param$language == "eng") {
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "year",
         names_prefix = "x",
         values_to = "value"
@@ -1410,7 +1399,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   if (param$dataset == "seeg_land" & param$geo_level %in% c("country", "state") & param$language == "eng") {
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "year",
         names_prefix = "x",
         values_to = "value"
@@ -1638,7 +1627,7 @@ load_seeg <- function(dataset, raw_data = FALSE,
   if (param$dataset == "seeg_farming" & param$geo_level %in% c("country", "state") & param$language == "eng") {
     dat <- dat %>%
       tidyr::pivot_longer(
-        cols = x1970:x2019,
+        cols = x1970:x2021,
         names_to = "year",
         names_prefix = "x",
         values_to = "value"

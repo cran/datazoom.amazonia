@@ -384,21 +384,25 @@ will be downloaded</p></li>
 </ol>
 <hr />
 <p><strong>Examples:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download treated (raw_data = FALSE) silviculture data (dataset = &#39;pevs_silviculture&#39;) </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># by state (geo_level = &#39;state&#39;) from 2012 (time_period =  2012) </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># in portuguese (language = &quot;pt&quot;)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_pevs</span>(<span class="at">dataset =</span> <span class="st">&#39;pevs_silviculture&#39;</span>, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&#39;state&#39;</span>, </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">time_period =</span> <span class="dv">2012</span>, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Download raw (raw_data = TRUE) forest crops data by region </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># from 2012 to 2013 in english</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_pevs</span>(<span class="at">dataset =</span> <span class="st">&#39;pevs_forest_crops&#39;</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">raw_data =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">geo_level =</span> <span class="st">&quot;region&quot;</span>, </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">time_period =</span> <span class="dv">2012</span><span class="sc">:</span><span class="dv">2013</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Download treated (raw_data = FALSE) silviculture data (dataset = &#39;pevs_silviculture&#39;)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># by state (geo_level = &#39;state&#39;) from 2012 (time_period =  2012)</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># in portuguese (language = &quot;pt&quot;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_pevs</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;pevs_silviculture&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;state&quot;</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">time_period =</span> <span class="dv">2012</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;pt&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co"># Download raw (raw_data = TRUE) forest crops data by region</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co"># from 2012 to 2013 in english</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_pevs</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;pevs_forest_crops&quot;</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;region&quot;</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="at">time_period =</span> <span class="dv">2012</span><span class="sc">:</span><span class="dv">2013</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>)</span></code></pre></div>
 
 
 

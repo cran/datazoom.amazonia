@@ -2,30 +2,27 @@
 #'
 #' @description Loads information about land cover and use
 #'
-#' @param dataset A dataset name ("mapbiomas_cover", "mapbiomas_transition", "mapbiomas_irrigation", "mapbiomas_deforestation_regeneration", "mapbiomas_grazing_quality", or "mapbiomas_mining")
+#' @param dataset A dataset name ("mapbiomas_cover", "mapbiomas_transition", "mapbiomas_irrigation", "mapbiomas_deforestation_regeneration", "mapbiomas_mining", "mapbiomas_water" or "mapbiomas_fire")
 #' @inheritParams load_baci
-#' @param geo_level A \code{string} that defines the geographic level of the data.
-#'   * For datasets "mapbiomas_cover" and "mapbiomas_transition", can be "municipality" or "state" (faster download).
-#'   * For dataset "mapbiomas_mining", can be "biome" or "indigenous_land".
-#' @param cover_level A \code{numeric} or \code{string} that indicates the cover aggregation level. Can be "0", "1", "2", "3", "4", or "none", which means no aggregation. Aggregation only supported for "mapbiomas_cover" and "mapbiomas_grazing_quality" datasets.
+#' @param geo_level A \code{string} that defines the geographic level of the data
+#'   * For dataset "mapbiomas_cover", can be "municipality" or "state" (faster download)
+#'   * For dataset "mapbiomas_transition", can be "municipality" or "state" (faster download)
+#'   * For dataset "mapbiomas_deforestation_regeneration", can only be "municipality"
+#'   * For dataset "mapbiomas_mining", can be "indigenous_land" or "municipality"
+#'   * For dataset "mapbiomas_irrigation", can be "state" or "biome"
+#'   * For dataset "mapbiomas_water", can be "municipality", "state" or "biome"
+#'   * For dataset "mapbiomas_fire", can only be "state"
 #'
 #' @return A \code{tibble}.
 #'
 #' @examples
 #' \dontrun{
-#' # download treated Mapbiomas Cover data in english at the highest aggregation level
+#' # download treated Mapbiomas Cover data in English
 #' data <- load_mapbiomas(
 #'   dataset = "mapbiomas_cover",
 #'   raw_data = FALSE,
 #'   geo_level = "municipality",
-#'   language = "eng",
-#'   cover_level = 0
-#' )
-#'
-#' # download treated Mapbiomas Transition data in portuguese
-#' data <- load_mapbiomas(
-#'   dataset = "mapbiomas_transition", raw_data = FALSE,
-#'   geo_level = "state", language = "pt"
+#'   language = "eng"
 #' )
 #'
 #' # download treated data on mining on indigenous lands
@@ -38,52 +35,44 @@
 #' @export
 
 load_mapbiomas <- function(dataset, raw_data = FALSE, geo_level = "municipality",
-                           language = "eng", cover_level = 1) {
-
-  # Checking for googledrive package (in Suggests) only for mapbiomas_transition dataset
-
-  if (!requireNamespace("googledrive", quietly = TRUE) &
-    dataset %in% c("mapbiomas_cover", "mapbiomas_transition") &
-    geo_level == "municipality") {
-    stop(
-      "Package \"googledrive\" must be installed to use this function.",
-      call. = FALSE
-    )
-  }
-
+                           language = "eng") {
   ###########################
   ## Bind Global Variables ##
   ###########################
 
-  survey <- link <- x1985 <- x2019 <- NULL
-  ano <- bioma <- category <- cidade <- city <- class_id <- country <- estado <- feature_id <- group <- terra_indigena <- NULL
-  id <- indigenous_land <- level_2 <- level_3 <- name_pt_br <- pais <- x2020 <- NULL
-  territory_id <- municipality <- state <- year <- value <- NULL
-  x1985_to_1986 <- x2018_to_2019 <- x1988 <- x2017 <- x2000 <- x2010 <- x2018 <- biome <- level_1 <- NULL
+  value <- NULL
 
   #############################
   ## Define Basic Parameters ##
   #############################
 
   param <- list()
+  param$source <- "mapbiomas"
   param$dataset <- dataset
   param$geo_level <- geo_level
   param$language <- language
   param$raw_data <- raw_data
-  param$cover_level <- cover_level
+
+  # check if dataset and geo_level are supported
+
+  check_params(param)
+
+  # plucking sheet correspinding to each dataset/geo_level
 
   sheets <- tibble::tribble(
     ~dataset, ~geo_level, ~sheet,
-    "mapbiomas_cover", "any", "LAND COVER",
-    "mapbiomas_transition", "any", "TRANSITIONS",
-    "mapbiomas_deforestation_regeneration", "any", "BD Colecao 5.0(h) - Hectares",
-    "mapbiomas_irrigation", "any", "BD_IRRIGACAO",
-    "mapbiomas_grazing_quality", "any", "BD_Qualidade",
-    "mapbiomas_mining", "country", "BR",
-    "mapbiomas_mining", "state", "UF",
-    "mapbiomas_mining", "biome", "BIOME",
-    "mapbiomas_mining", "municipality", "MUN",
-    "mapbiomas_mining", "indigenous_land", "TI"
+    "mapbiomas_cover", "any", "COBERTURA_COL8.0",
+    "mapbiomas_transition", "state", "TRANSICOES_COL8.0",
+    "mapbiomas_transition", "municipality", "TRANSICOES_COL8.0",
+    "mapbiomas_deforestation_regeneration", "municipality", "CITY_STATE_BIOME",
+    "mapbiomas_irrigation", "state", "UF",
+    "mapbiomas_irrigation", "biome", "BIOME",
+    "mapbiomas_mining", "municipality", "CITY_STATE_BIOME",
+    "mapbiomas_mining", "indigenous_land", "IL",
+    "mapbiomas_water", "state", "states_annual",
+    "mapbiomas_water", "biome", "biomes_annual",
+    "mapbiomas_water", "municipality", "mun_annual",
+    "mapbiomas_fire", "state", "ANNUAL",
   )
 
   sheet <- sheets %>%
@@ -94,13 +83,32 @@ load_mapbiomas <- function(dataset, raw_data = FALSE, geo_level = "municipality"
     dplyr::select(sheet) %>%
     unlist()
 
+  ## MapBiomas collections
+
+  if (dataset %in% c(
+    "mapbiomas_cover",
+    "mapbiomas_transition",
+    "mapbiomas_deforestation_regeneration",
+    "mapbiomas_mining"
+  )) {
+    message("Data from MapBiomas - Collection 8\n")
+  }
+
+  if (dataset %in% c("mapbiomas_irrigation")) {
+    message("Data from Mapbiomas - Collection 7\n")
+  }
+
+  if (dataset %in% c("mapbiomas_water", "mapbiomas_fire")) {
+    message("Data from Mapbiomas - Collection 2\n")
+  }
+
   #################
   ## Downloading ##
   #################
 
   dat <- external_download(
     dataset = param$dataset,
-    source = "mapbiomas",
+    source = param$source,
     geo_level = param$geo_level,
     sheet = sheet
   )
@@ -117,96 +125,93 @@ load_mapbiomas <- function(dataset, raw_data = FALSE, geo_level = "municipality"
 
   dat <- dat %>%
     janitor::clean_names() %>%
-    tibble::as_tibble() %>%
     dplyr::mutate_if(is.character, function(var) {
       stringi::stri_trans_general(str = var, id = "Latin-ASCII")
     })
 
-  ## Create Longer Data - Years as a Variable
+  if (param$dataset != "mapbiomas_water") {
+    dat <- dat %>%
+      dplyr::select(-dplyr::contains("id"))
 
-  dat <- dat %>%
-    tidyr::pivot_longer(
-      cols = dplyr::starts_with("x"),
-      names_to = "year",
-      names_prefix = "x",
-      values_to = "value"
-    )
-
-  # Testing cover_level support
-  if (param$dataset == "mapbiomas_grazing_quality" & !(param$cover_level %in% c(1, "1", "none"))) {
-    base::message("The \"mapbiomas_grazing_quality\" dataset only supports cover_level 1 or \"none\"")
-    param$cover_level <- 1
-  }
-
-  if (param$dataset %in% c("mapbiomas_cover", "mapbiomas_grazing_quality") & param$cover_level != "none") {
-
-    ## Aggregating by Cover Level
+    # reshaping
 
     dat <- dat %>%
-      tidyr::pivot_wider(
-        id_cols = dplyr::any_of(c(
-          "geo_code", "city",
-          "state", "year",
-          "biome", "state"
-        )),
-        names_from = paste0("level_", param$cover_level),
-        values_from = value,
-        values_fn = sum,
-        values_fill = NA
+      tidyr::pivot_longer(
+        dplyr::starts_with("x"),
+        names_to = "year",
+        values_to = "value",
+        names_prefix = "x"
       ) %>%
-      janitor::clean_names()
+      tidyr::drop_na(value)
+  } else {
+    if (param$geo_level == "municipality") {
+      dat <- dat %>%
+        dplyr::rename("municipality_code" = "code")
+    }
+    if (param$geo_level == "biome") {
+      dat <- dat %>%
+        dplyr::rename(
+          "biome_code" = "code", "biome" = "name"
+        )
+    }
+    if (param$geo_level == "state") {
+      dat <- dat %>%
+        dplyr::rename(
+          "state_code" = "code", "state" = "name"
+        )
+    }
   }
 
-  dat <- dat %>%
-    dplyr::select(-dplyr::any_of("category"))
+  ################################
+  ## Harmonizing Variable Names ##
+  ################################
 
-  #################
-  ## Translation ##
-  #################
+  rm_vars <- c(
+    "biome_municipality", "color", "category", "biome_state",
+    "to_color", "from_color", "from_class", "to_class",
+    "class_lulc", "group"
+  )
 
   dat_mod <- dat %>%
-    dplyr::rename_with(dplyr::recode,
-      "name_pt_br" = param$geo_level
+    dplyr::select(
+      -dplyr::any_of(c(rm_vars))
     )
-
-  dat_mod <- dat_mod %>%
-    dplyr::relocate(dplyr::any_of(c("year", "state", "city", "geo_code", "biome", "indigenous_land")))
 
   if (param$language == "pt") {
     dat_mod <- dat_mod %>%
-      dplyr::rename_with(dplyr::recode,
-        "feature_id" = "id",
-        "class_id" = "id_classe",
-        "group" = "grupo",
-        "year" = "ano",
-        "value" = "valor",
-        "state" = "estado",
-        "municipality" = "municipio",
-        "city" = "municipio",
-        "geo_code" = "cod_municipio",
-        "biome" = "bioma",
-        "indigenous_land" = "terra_indigena",
-      )
+      dplyr::rename_with(~ dplyr::case_match(.,
+        "municipality" ~ "municipio",
+        "city" ~ "municipio",
+        "biome" ~ "bioma",
+        "geocode" ~ "cod_municipio",
+        "state_acronym" ~ "uf",
+        "value" ~ "valor",
+        "year" ~ "ano",
+        "dr_class_name" ~ "classe_desmatamento",
+        "class_irrig" ~ "classe_irrigacao",
+        "il" ~ "terra_indigena",
+        "municipality_code" ~ "cod_municipio",
+        "biome_code" ~ "cod_bioma",
+        "biome" ~ "bioma",
+        "state_code" ~ "cod_uf",
+        "state" ~ "uf",
+        .default = .
+      )) %>%
+      dplyr::rename_with(~ stringr::str_replace(., "to_level", "para_level")) %>%
+      dplyr::rename_with(~ stringr::str_replace(., "from_level", "de_level"))
   }
 
   if (param$language == "eng") {
     dat_mod <- dat_mod %>%
-      dplyr::rename_with(dplyr::recode,
-        "city" = "municipality",
-        "geo_code" = "municipality_code",
-        "codigobioma" = "biome_code",
-        "bioma" = "biome",
-        "uf" = "state",
-        "cod_tipo_mudanca_n1" = "code_type_change_l1",
-        "cod_tipo_mudanca_n2" = "code_type_change_l2",
-        "cod_classe_des_ou_reg" = "code_class_def_or_reg",
-        "tipo_mudanca_nivel1" = "type_change_level_1",
-        "tipo_mudanca_nivel2" = "type_change_level_2",
-        "cobertura_nivel_1" = "cover_level_1",
-        "cobertura_nivel_2" = "cover_level_2",
-        "cobertura_nivel_3" = "cover_level_3",
-        "cobertura_nivel_4" = "cover_level_4"
-      )
+      dplyr::rename_with(~ dplyr::case_match(.,
+        "city" ~ "municipality",
+        "geocode" ~ "municipality_code",
+        "state_acronym" ~ "state",
+        "dr_class_name" ~ "deforestation_class",
+        "classe_irrig" ~ "irrigation_class",
+        "il" ~ "indigenous_land",
+        .default = .
+      ))
   }
 
   ####################

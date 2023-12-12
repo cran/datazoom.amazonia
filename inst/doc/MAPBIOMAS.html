@@ -340,24 +340,26 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<p>The MAPBIOMAS project gathers data reporting the type of land
+<p>The MapBiomas project gathers data reporting the type of land
 covering each year by area, that is, for example, the area used for a
-temporary crop of soybeans. It also reports the transition between
-coverings during given years.</p>
-<p>The data available has an yearly frequency and is available starting
-from the year 1989.</p>
+temporary crop of soybeans. It also reports the transitions in land
+coverage between years.</p>
+<p>The data has yearly frequency and is available starting from the year
+1989.</p>
+<p>For all datasets, areas are measured in hectares (ha).</p>
 <hr />
 <p><strong>Options:</strong></p>
 <ol style="list-style-type: decimal">
-<li><p><strong>dataset</strong>:</p>
+<li><p><strong>dataset</strong>: there are 7 possible choices:</p>
 <ul>
-<li><code>&quot;mapbiomas_cover&quot;</code>: types of land cover</li>
-<li><code>&quot;mapbiomas_transition&quot;</code>: changes in land cover</li>
+<li><code>&quot;mapbiomas_cover&quot;</code>: types of land cover.</li>
+<li><code>&quot;mapbiomas_transition&quot;</code>: changes in land cover.</li>
 <li><code>&quot;mapbiomas_deforestation_regeneration&quot;</code>: deforestation
-and forest regeneration</li>
-<li><code>&quot;mapbiomas_irrigation&quot;</code>: irrigated areas</li>
-<li><code>&quot;mapbiomas_grazing_quality&quot;</code>: grazing quality</li>
-<li><code>&quot;mapbiomas_mining&quot;</code>: areas used for mining</li>
+and forest regeneration.</li>
+<li><code>&quot;mapbiomas_irrigation&quot;</code>: irrigated areas.</li>
+<li><code>&quot;mapbiomas_mining&quot;</code>: areas used for mining.</li>
+<li><code>&quot;mapbiomas_water&quot;</code>: areas of water surface.</li>
+<li><code>&quot;mapbiomas_fire&quot;</code>: areas of wildfire burn scars.</li>
 </ul></li>
 <li><p><strong>raw_data</strong>: there are two options:</p>
 <ul>
@@ -367,52 +369,42 @@ data.</li>
 </ul></li>
 <li><p><strong>geo_level</strong>:</p>
 <ul>
-<li>For datasets <code>&quot;mapbiomas_cover&quot;</code> and
-<code>&quot;mapbiomas_transition&quot;</code>, can be <code>&quot;municipality&quot;</code>
-or <code>&quot;state&quot;</code> (faster download).</li>
+<li>For dataset <code>&quot;mapbiomas_cover&quot;</code>, can be
+<code>&quot;municipality&quot;</code> or <code>&quot;state&quot;</code> (faster
+download)</li>
+<li>For dataset <code>&quot;mapbiomas_transition&quot;</code>, can be
+<code>&quot;municipality&quot;</code> or <code>&quot;state&quot;</code> (faster
+download)</li>
+<li>For dataset <code>&quot;mapbiomas_deforestation_regeneration&quot;</code>, can
+only be <code>&quot;municipality&quot;</code></li>
 <li>For dataset <code>&quot;mapbiomas_mining&quot;</code>, can be
-<code>&quot;biome&quot;</code> or <code>&quot;indigenous_land&quot;</code>.</li>
-<li>Does not apply to other datasets.</li>
+<code>&quot;indigenous_land&quot;</code> or <code>&quot;municipality&quot;</code></li>
+<li>For dataset <code>&quot;mapbiomas_irrigation&quot;</code>, can be
+<code>&quot;state&quot;</code> or <code>&quot;biome&quot;</code></li>
+<li>For dataset <code>&quot;mapbiomas_water&quot;</code>, can be
+<code>&quot;municipality&quot;</code>, <code>&quot;state&quot;</code> or
+<code>&quot;biome&quot;</code></li>
+<li>For dataset <code>&quot;mapbiomas_fire&quot;</code>, can only be
+<code>&quot;state&quot;</code></li>
 </ul></li>
 <li><p><strong>language</strong>: you can choose between Portuguese
-<code>(&quot;pt&quot;)</code> and English <code>(&quot;eng&quot;)</code></p></li>
-<li><p><strong>cover_level</strong>: Aggregates the data to some level
-of land coverage. Only applies to datasets
-<code>&quot;mapbiomas_cover&quot;</code> and
-<code>&quot;mapbiomas_grazing_quality&quot;</code>:</p>
-<ul>
-<li><code>cover_level = &quot;none&quot;</code>: no aggregation</li>
-<li><code>cover_level = 0</code>: least aggregated, with categories of
-Anthropic and Natural</li>
-<li><code>cover_level = 1</code>: categories such as Forest, Non Forest
-Natural Formation, Farming, Non Vegetated Area, Water, Non Observed</li>
-<li><code>cover_level = 2</code>: categories such as Agriculture,
-Aquaculture, Beach and Dune, Forest Plantation, Pasture, River, Lake and
-Ocean<br />
-</li>
-<li><code>cover_level = 3</code>: categories such as Aquaculture, Beach
-and Dune, Forest Formation, Forest Plantation</li>
-<li><code>cover_level = 4</code>: categories such as Aquaculture, Beach
-and Dune, Forest Formation, Forest Plantation</li>
-</ul></li>
+<code>(&quot;pt&quot;)</code> and English <code>(&quot;eng&quot;)</code>.</p></li>
 </ol>
 <hr />
 <p><strong>Examples:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Cover data in english at the highest aggregation level</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_cover&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">geo_level =</span> <span class="st">&quot;municipality&quot;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">language =</span> <span class="st">&quot;eng&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cover_level =</span> <span class="dv">0</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated Mapbiomas Transition data in portuguese</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_mapbiomas</span>(<span class="at">dataset =</span> <span class="st">&quot;mapbiomas_transition&quot;</span>, <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">geo_level =</span> <span class="st">&quot;state&quot;</span>, <span class="at">language =</span> <span class="st">&quot;pt&quot;</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># download treated data on mining on indigenous lands</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_mapbiomas</span>(<span class="st">&quot;mapbiomas_mining&quot;</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">geo_level =</span> <span class="st">&quot;indigenous_land&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># download treated Mapbiomas Cover data in English</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_mapbiomas</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;mapbiomas_cover&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;municipality&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;eng&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># download treated data on mining on indigenous lands</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_mapbiomas</span>(<span class="st">&quot;mapbiomas_mining&quot;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;indigenous_land&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>)</span></code></pre></div>
 
 
 

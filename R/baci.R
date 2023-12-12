@@ -26,7 +26,6 @@
 
 load_baci <- function(dataset = "HS92", raw_data = FALSE, time_period,
                       language = "eng") {
-
   ###########################
   ## Bind Global Variables ##
   ###########################
@@ -40,28 +39,15 @@ load_baci <- function(dataset = "HS92", raw_data = FALSE, time_period,
   #############################
 
   param <- list()
+  param$source <- "baci"
   param$dataset <- dataset
   param$raw_data <- raw_data
   param$time_period <- time_period
   param$language <- language
 
-  ## Check if year is acceptable
+  # check if dataset and time_period are valid
 
-  year_check <- datasets_link() %>%
-    dplyr::filter(dataset == param$dataset) %>%
-    dplyr::select(available_time) %>%
-    unlist() %>%
-    as.character() %>%
-    stringr::str_split(pattern = "-") %>%
-    unlist() %>%
-    as.numeric()
-
-  if (min(time_period) < year_check[1]) {
-    stop("Provided time period less than supported. Check documentation for time availability.")
-  }
-  if (max(time_period) > year_check[2]) {
-    stop("Provided time period greater than supported. Check documentation for time availability.")
-  }
+  check_params(param)
 
   #################
   ## Downloading ##
@@ -70,7 +56,7 @@ load_baci <- function(dataset = "HS92", raw_data = FALSE, time_period,
   base::message(base::cat("The download can take some time (~10-30mins)"))
 
   dat <- external_download(
-    source = "baci",
+    source = param$source,
     dataset = param$dataset,
     year = param$time_period,
   )
@@ -154,7 +140,6 @@ load_baci <- function(dataset = "HS92", raw_data = FALSE, time_period,
 
 
 load_baci_dic <- function(language) {
-
   # Bind Global Variables
 
   locale <- co_sh6 <- co_sh4 <- co_sh2 <- co_ncm_secrom <- no_sh6_ing <- no_sh4_ing <- no_sh2_ing <- no_sec_ing <- NULL

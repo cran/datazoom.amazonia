@@ -12,7 +12,7 @@
 
 
 
-<title>CIPÓ</title>
+<title>CENSOAGRO</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -336,52 +336,90 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">CIPÓ</h1>
+<h1 class="title toc-ignore">CENSOAGRO</h1>
 
 
 
-<p>Mappings by <a href="https://plataformacipo.org/">Plataforma CIPÓ</a>
-on environmental crimes. Each dataset available is a spreadsheet
-pertaining to a different aspect of environmental crimes, namely: the
-Brazilian institutions and organization involved in their prevention
-(the <code>&quot;brazilian_actors&quot;</code> dataset); the international
-agreements, treaties and conventions related to the subject (the
-<code>&quot;international_cooperation&quot;</code> dataset); and the arrangements
-regarding forest governance (the <code>&quot;forest_governance&quot;</code>
-dataset).</p>
+<p>The census of agriculture collects information about agricultural
+establishments and the agricultural activities carried out there,
+covering characteristics of the producer and establishment, economy and
+employment in rural areas, livestock, farming and agroindustry.</p>
+<p>Data is collected by IBGE and is available at country, state and
+municipality level.</p>
 <hr />
 <p><strong>Options:</strong></p>
 <ol style="list-style-type: decimal">
-<li><strong>dataset</strong>: there are three choices:
+<li><p><strong>dataset</strong>:there are 10 possible choices:</p>
 <ul>
-<li><code>&quot;brazilian_actors&quot;</code>: mapping of Brazilian actors
-involved in preventing environmental crimes.</li>
-<li><code>&quot;international_cooperation&quot;</code>: mapping of international
-agreements, treaties and conventions.</li>
-<li><code>&quot;forest_governance&quot;</code>: mapping of forest governance
-arrangements.</li>
+<li><code>&quot;agricultural_land_area&quot;</code>: area and number of
+agricultural properties</li>
+<li><code>&quot;agricultural_area_use&quot;</code>: area of agricultural
+properties by use</li>
+<li><code>&quot;agricultural_employees_tractors&quot;</code>: number of employees
+and tractors in agricultural properties</li>
+<li><code>&quot;agricultural_producer_condition&quot;</code>: condition of
+agricultural producer, whether they own the land</li>
+<li><code>&quot;animal_production&quot;</code>: number of animals farmed, by
+species</li>
+<li><code>&quot;animal_products&quot;</code>: amount of animal products, by
+product type</li>
+<li><code>&quot;vegetable_production_area&quot;</code>: area and amount produced,
+by vegetable product</li>
+<li><code>&quot;vegetable_production_temporary&quot;</code>: amount produced, by
+temporary crop</li>
+<li><code>&quot;vegetable_production_permanent&quot;</code>: amount produced, by
+permanent crop</li>
+<li><code>&quot;livestock_production&quot;</code>: amount of bovine cattle, and
+number of agricultural properties</li>
 </ul></li>
-<li><strong>raw_data</strong>: there are two options:
+<li><p><strong>raw_data</strong>: there are two options:</p>
 <ul>
 <li><code>TRUE</code>: if you want the data as it is originally.</li>
 <li><code>FALSE</code>: if you want the treated version of the
 data.</li>
 </ul></li>
-<li><strong>search</strong>: Filters the dataset to the rows containing
-the chosen search parameter.</li>
+<li><p><strong>geo_level</strong>: <code>&quot;country&quot;</code> or
+<code>&quot;state&quot;</code>. For dataset <code>&quot;livestock_production&quot;</code>,
+it can also be <code>&quot;municipality&quot;</code></p></li>
+<li><p><strong>time_period</strong>: picks the years for which the data
+will be downloaded:</p>
+<ul>
+<li>For datasets <code>&quot;agricultural_land_area&quot;</code>,
+<code>&quot;agricultural_producer_condition&quot;</code>,
+<code>&quot;animal_products&quot;</code>, and
+<code>&quot;vegetable_production_area&quot;</code>, it can be one of 1920, 1940,
+1950, 1960, 1970, 1975, 1980, 1985, 1995, or 2006.</li>
+<li>For datasets <code>&quot;vegetable_production_permanent&quot;</code> and
+<code>&quot;vegetable_production_permanent&quot;</code>, it can only be from 1940
+onwards</li>
+<li>For datasets <code>&quot;agricultural_area_use&quot;</code>,
+<code>&quot;agricultural_employees_tractors&quot;</code>,
+<code>&quot;animal_production&quot;</code>, it can only be from 1970 onwards</li>
+<li>For dataset <code>&quot;livestock_production&quot;</code>, it can only be
+2017</li>
+</ul></li>
+<li><p><strong>language</strong>: you can choose between Portuguese
+<code>(&quot;pt&quot;)</code> and English <code>(&quot;eng&quot;)</code></p></li>
 </ol>
 <hr />
 <p><strong>Examples:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the spreacdsheet on Brazilian actors involved in fighting environmental crimes</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>brazilian_actors <span class="ot">&lt;-</span> <span class="fu">load_cipo</span>(<span class="at">dataset =</span> <span class="st">&quot;brazilian_actors&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># searching only for entries containing IBAMA</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>actors_ibama <span class="ot">&lt;-</span> <span class="fu">load_cipo</span>(<span class="at">dataset =</span> <span class="st">&quot;brazilian_actors&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">search =</span> <span class="st">&quot;ibama&quot;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># entries containing IBAMA or FUNAI</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>actors_ibama <span class="ot">&lt;-</span> <span class="fu">load_cipo</span>(<span class="at">dataset =</span> <span class="st">&quot;brazilian_actors&quot;</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">search =</span> <span class="st">&quot;ibama|funai&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Download total land area data at the country level in year 2006</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_censoagro</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;agricultural_land_area&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;country&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="at">time_period =</span> <span class="dv">2006</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Download temporary production crops data by state (geo_level = &quot;state&quot;) in year 2006</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># in portuguese (language = &quot;pt&quot;)</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">load_censoagro</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;vegetable_production_temporary&quot;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">raw_data =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="at">geo_level =</span> <span class="st">&quot;state&quot;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="at">time_period =</span> <span class="dv">1996</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="at">language =</span> <span class="st">&quot;pt&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>)</span></code></pre></div>
 
 
 

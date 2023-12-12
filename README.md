@@ -65,9 +65,10 @@ devtools::install_github("datazoompuc/datazoom.amazonia")
 |                                   |                                     |
 |-----------------------------------|-------------------------------------|
 | **[IBAMA](#ibama)**               | *Environmental fines*               |
-| **[MAPBIOMAS](#mapbiomas)**       | *Land cover and land use*           |
+| **[MapBiomas](#mapbiomas)**       | *Land cover and land use*           |
 | **[TerraClimate](#terraclimate)** | *Climate data*                      |
 | **[SEEG](#seeg)**                 | *Greenhouse gas emission estimates* |
+| **[CENSOAGRO](#censoagro)**       | *Agriculture activities*            |
 
 </td>
 </tr>
@@ -79,11 +80,12 @@ devtools::install_github("datazoompuc/datazoom.amazonia")
 <tr>
 <td>
 
-|                         |                                                         |
-|-------------------------|---------------------------------------------------------|
-| **[IPS](#ips)**         | *Amazon Social Progress Index*                          |
-| **[DATASUS](#datasus)** | *Causes of mortality and availability of hospital beds* |
-| **[IEMA](#iema)**       | *Access to electricity in the Amazon region*            |
+|                               |                                                         |
+|-------------------------------|---------------------------------------------------------|
+| **[IPS](#ips)**               | *Amazon Social Progress Index*                          |
+| **[DATASUS](#datasus)**       | *Causes of mortality and availability of hospital beds* |
+| **[IEMA](#iema)**             | *Access to electricity in the Amazon region*            |
+| **[Population](#population)** | *Population*                                            |
 
 </td>
 </tr>
@@ -137,33 +139,30 @@ devtools::install_github("datazoompuc/datazoom.amazonia")
 
 The PRODES project uses satellites to monitor deforestation in Brazil’s
 Legal Amazon. The raw data reports total and incremental (year-by-year)
-low-cut deforested area at the municipality level.
-
-The data made available in this package goes back to the year 2000, with
-ongoing updates. In line with INPE’s API, requesting data for an
-unavailable year does not yield an error, but rather a best effort
-response (columns regarding observation data are filled with default
-values).
+low-cut deforested area at the municipality level, going back to the
+year 2000.
 
 Data is collected based on the PRODES-year, which starts at August 1st
 and ends on July 31st. Accordingly, 2018 deforestation data covers the
 period from 01/08/2017 to 31/07/2018.
 
+INPE’s most recent data is now published at
+[TerraBrasilis](http://terrabrasilis.dpi.inpe.br/downloads/). We have
+refrained from updating to this new source, as it only contains detailed
+spatial data, rather than agregated, municipality-level data.
+
 ------------------------------------------------------------------------
 
 **Options:**
 
-1.  **dataset**: `"prodes"`
+1.  **dataset**: `"deforestation"`
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
-3.  **time_period**: picks the years for which the data will be
-    downloaded
-
-4.  **language**: you can choose between Portuguese `("pt")` and English
+3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
 
 ------------------------------------------------------------------------
@@ -171,11 +170,12 @@ period from 01/08/2017 to 31/07/2018.
 **Examples:**
 
 ``` r
-# Download treated data (raw_data = FALSE) from 2010 (time_period = 2010) 
+# Download treated data (raw_data = FALSE)
 # in portuguese (language = 'pt').
-data <- load_prodes(raw_data = FALSE,
-                    time_period = 2010,
-                    language = 'pt')  
+data <- load_prodes(
+  raw_data = FALSE,
+  language = "pt"
+)
 ```
 
 ## DETER
@@ -192,7 +192,7 @@ onward in the Cerrado.
 The raw DETER data shows one warning per row, with each row also
 containing a municipality. However, many warnings actually overlap with
 2 or up to 4 municipalities, which are not shown in the original data.
-Therefore, when the option `raw_data = TRUE` is selected, the original
+Therefore, when the option `raw_data = FALSE` is selected, the original
 spatial information is intersected with a municipalities map of Brazil,
 and each warning can be split into more than one row, with each row
 corresponding to a municipality.
@@ -202,11 +202,11 @@ corresponding to a municipality.
 **Options:**
 
 1.  **dataset**: there are two options:
-    -   `"deter_amz"` for data from the Amazon
-    -   `"deter_cerrado"` for data from the Cerrado
+    - `"deter_amz"` for data from the Amazon
+    - `"deter_cerrado"` for data from the Cerrado
 2.  **raw_data**: there are two options:
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
 
@@ -216,8 +216,10 @@ corresponding to a municipality.
 
 ``` r
 # Download treated data (raw_data = FALSE) from Amazonia (dataset = "deter_amz")
-deter_amz <- load_deter(dataset = 'deter_amz',
-                        raw_data = FALSE)
+deter_amz <- load_deter(
+  dataset = "deter_amz",
+  raw_data = FALSE
+)
 ```
 
 ## DEGRAD
@@ -251,8 +253,8 @@ assumed
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **time_period**: picks the years for which the data will be
     downloaded
@@ -266,10 +268,12 @@ assumed
 
 ``` r
 # download treated data (raw_data = TRUE) related to forest degradation
-# from 2010 to 2012 (time_period = 2010:2012). 
-data <- load_degrad(dataset = 'degrad', 
-                    raw_data = FALSE,
-                    time_period = 2010:2012)
+# from 2010 to 2012 (time_period = 2010:2012).
+data <- load_degrad(
+  dataset = "degrad",
+  raw_data = FALSE,
+  time_period = 2010:2012
+)
 ```
 
 ## Imazon
@@ -286,8 +290,8 @@ ranging from 0 to 3.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
@@ -324,21 +328,21 @@ regarding distributed and collected fines across municipalities
 
 1.  **dataset**: there are three possible choices.
 
-    -   `"areas_embargadas"`: embargoed areas
-    -   `"distributed_fines"`: fines that have not been paid by
-        individuals or corporations
-    -   `"collected_fines"`: fines that have been paid by individuals or
-        corporations
+    - `"embargoed_areas"`: embargoed areas
+    - `"distributed_fines"`: fines that have not been paid by
+      individuals or corporations
+    - `"collected_fines"`: fines that have been paid by individuals or
+      corporations
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **states**: specifies for which states to download the data. It is
     “all” by default, but can be a single state such as `"AC"` or any
     vector such as `c("AC", "AM")`. Does not apply to the
-    `"areas_embargadas"` dataset.
+    `"embargoed_areas"` dataset.
 
 4.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
@@ -351,97 +355,88 @@ regarding distributed and collected fines across municipalities
 library(datazoom.amazonia)
 
 # Download treated embargoes data (raw_data = FALSE) in english (language = "eng")
-data <- load_ibama(dataset = "areas_embargadas", raw_data = FALSE, 
-                   language = "eng")
+data <- load_ibama(
+  dataset = "embargoed_areas", raw_data = FALSE,
+  language = "eng"
+)
 
 # Download treated collected fines data from "BA"
-data <- load_ibama(dataset = "collected_fines", raw_data = FALSE,
-                   states = "BA", language = "pt")
+data <- load_ibama(
+  dataset = "collected_fines", raw_data = FALSE,
+  states = "BA", language = "pt"
+)
 ```
 
-## MAPBIOMAS
+## MapBiomas
 
-The MAPBIOMAS project gathers data reporting the type of land covering
+The MapBiomas project gathers data reporting the type of land covering
 each year by area, that is, for example, the area used for a temporary
-crop of soybeans. It also reports the transition between coverings
-during given years.
+crop of soybeans. It also reports the transitions in land coverage
+between years.
 
-The data available has an yearly frequency and is available starting
-from the year 1989.
+The data has yearly frequency and is available starting from the year
+1989.
+
+For all datasets, areas are measured in hectares (ha).
 
 ------------------------------------------------------------------------
 
 **Options:**
 
-1.  **dataset**:
+1.  **dataset**: there are 7 possible choices:
 
-    -   `"mapbiomas_cover"`: types of land cover
-    -   `"mapbiomas_transition"`: changes in land cover
-    -   `"mapbiomas_deforestation_regeneration"`: deforestation and
-        forest regeneration
-    -   `"mapbiomas_irrigation"`: irrigated areas
-    -   `"mapbiomas_grazing_quality"`: grazing quality
-    -   `"mapbiomas_mining"`: areas used for mining
+    - `"mapbiomas_cover"`: types of land cover.
+    - `"mapbiomas_transition"`: changes in land cover.
+    - `"mapbiomas_deforestation_regeneration"`: deforestation and forest
+      regeneration.
+    - `"mapbiomas_irrigation"`: irrigated areas.
+    - `"mapbiomas_mining"`: areas used for mining.
+    - `"mapbiomas_water"`: areas of water surface.
+    - `"mapbiomas_fire"`: areas of wildfire burn scars.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**:
 
-    -   For datasets `"mapbiomas_cover"` and `"mapbiomas_transition"`,
-        can be `"municipality"` or `"state"` (faster download).
-    -   For dataset `"mapbiomas_mining"`, can be `"biome"` or
-        `"indigenous_land"`.
-    -   Does not apply to other datasets.
+    - For dataset `"mapbiomas_cover"`, can be `"municipality"` or
+      `"state"` (faster download)
+    - For dataset `"mapbiomas_transition"`, can be `"municipality"` or
+      `"state"` (faster download)
+    - For dataset `"mapbiomas_deforestation_regeneration"`, can only be
+      `"municipality"`
+    - For dataset `"mapbiomas_mining"`, can be `"indigenous_land"` or
+      `"municipality"`
+    - For dataset `"mapbiomas_irrigation"`, can be `"state"` or
+      `"biome"`
+    - For dataset `"mapbiomas_water"`, can be `"municipality"`,
+      `"state"` or `"biome"`
+    - For dataset `"mapbiomas_fire"`, can only be `"state"`
 
 4.  **language**: you can choose between Portuguese `("pt")` and English
-    `("eng")`
-
-5.  **cover_level**: Aggregates the data to some level of land coverage.
-    Only applies to datasets `"mapbiomas_cover"` and
-    `"mapbiomas_grazing_quality"`:
-
-    -   `cover_level = "none"`: no aggregation
-    -   `cover_level = 0`: least aggregated, with categories of
-        Anthropic and Natural
-    -   `cover_level = 1`: categories such as Forest, Non Forest Natural
-        Formation, Farming, Non Vegetated Area, Water, Non Observed
-    -   `cover_level = 2`: categories such as Agriculture, Aquaculture,
-        Beach and Dune, Forest Plantation, Pasture, River, Lake and
-        Ocean  
-    -   `cover_level = 3`: categories such as Aquaculture, Beach and
-        Dune, Forest Formation, Forest Plantation
-    -   `cover_level = 4`: categories such as Aquaculture, Beach and
-        Dune, Forest Formation, Forest Plantation
+    `("eng")`.
 
 ------------------------------------------------------------------------
 
 **Examples:**
 
 ``` r
-# download treated Mapbiomas Cover data in english at the highest aggregation level
-data <- load_mapbiomas(dataset = "mapbiomas_cover",
-                       raw_data = FALSE,
-                       geo_level = "municipality",
-                       language = "eng",
-                       cover_level = 0)
-
-# download treated Mapbiomas Transition data in portuguese
-data <- load_mapbiomas(dataset = "mapbiomas_transition", raw_data = FALSE,
-                       geo_level = "state", language = "pt")
+# download treated Mapbiomas Cover data in English
+data <- load_mapbiomas(
+  dataset = "mapbiomas_cover",
+  raw_data = FALSE,
+  geo_level = "municipality",
+  language = "eng"
+)
 
 # download treated data on mining on indigenous lands
 data <- load_mapbiomas("mapbiomas_mining",
-                       raw_data = FALSE,
-                       geo_level = "indigenous_land")
+  raw_data = FALSE,
+  geo_level = "indigenous_land"
+)
 ```
-
-🔴 This function uses the `googledrive` package to download data for
-datasets `"mapbiomas_cover"` and `"mapbiomas_transition"` at the
-municipality level. In case of authentication errors, see
-[googledrive](#googledrive).
 
 ## TerraClimate
 
@@ -449,6 +444,15 @@ Spatial data on several climate variables, extracted from Climatology
 Lab’s [TerraClimate](https://www.climatologylab.org/terraclimate.html).
 The table below shows all possible variables to be extracted, which are
 chosen through the “dataset” parameter. Data ranges from 1958 to 2020.
+
+Netcdf files are downloaded from the
+[THREDDS](http://thredds.northwestknowledge.net:8080/thredds/terraclimate_catalog.html)
+web server, as recommended for rectangular subsets of the global data.
+
+<details>
+<summary>
+Click to see all dataset options
+</summary>
 
 | Dataset                       | Code | Description                                      |  Units   |
 |:------------------------------|:----:|:-------------------------------------------------|:--------:|
@@ -467,9 +471,7 @@ chosen through the “dataset” parameter. Data ranges from 1958 to 2020.
 | water_evaporation             | aet  | Actual Evapotranspiration                        |    mm    |
 | palmer_drought_severity_index | PDSI | Palmer Drought Severity Index                    | unitless |
 
-Netcdf files are downloaded from the
-[THREDDS](http://thredds.northwestknowledge.net:8080/thredds/terraclimate_catalog.html)
-web server, as recommended for rectangular subsets of the global data.
+</details>
 
 ------------------------------------------------------------------------
 
@@ -480,8 +482,8 @@ web server, as recommended for rectangular subsets of the global data.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **time_period**: picks the years for which the data will be
     downloaded
@@ -492,6 +494,8 @@ web server, as recommended for rectangular subsets of the global data.
 5.  **legal_amazon_only**: if set to `TRUE`, only downloads data from
     the Legal Amazon region
 
+OBS: A good internet connection is needed, because the data is heavy.
+
 ------------------------------------------------------------------------
 
 **Examples:**
@@ -501,9 +505,11 @@ web server, as recommended for rectangular subsets of the global data.
 max_temp <- load_climate(dataset = "max_temperature", time_period = 2000:2001)
 
 # Downloading precipitation data only for the legal Amazon in 2010
-amz_precipitation <- load_climate(dataset = "precipitation",
-                                  time_period = 2010,
-                                  legal_amazon_only = TRUE)
+amz_precipitation <- load_climate(
+  dataset = "precipitation",
+  time_period = 2010,
+  legal_amazon_only = TRUE
+)
 ```
 
 ## SEEG
@@ -543,18 +549,18 @@ necessary, and the function may take time to run.
 
 1.  **dataset**: there are six choices:
 
-    -   `"seeg"`: provides all sectors in a same dataframe. Only works
-        with `raw_data = TRUE`
-    -   `"seeg_farming"`
-    -   `"seeg_industry"`
-    -   `"seeg_energy"`
-    -   `"seeg_land"`
-    -   `"seeg_residuals"`
+    - `"seeg"`: provides all sectors in a same dataframe. Only works
+      with `raw_data = TRUE`
+    - `"seeg_farming"`
+    - `"seeg_industry"`
+    - `"seeg_energy"`
+    - `"seeg_land"`
+    - `"seeg_residuals"`
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"state"`, or `"municipality"`
 
@@ -566,60 +572,108 @@ necessary, and the function may take time to run.
 **Examples:**
 
 ``` r
-# Download raw data (raw_data = TRUE) of greenhouse gases (dataset = "seeg") 
+# Download raw data (raw_data = TRUE) of greenhouse gases (dataset = "seeg")
 # by state (geo_level = "state")
-data <- load_seeg(dataset = "seeg", 
-                  raw_data = TRUE,
-                  geo_level = "state")
-  
+data <- load_seeg(
+  dataset = "seeg",
+  raw_data = TRUE,
+  geo_level = "state"
+)
+
 # Download treated data (raw_data = FALSE) of industry greenhouse gases (dataset = "seeg_industry")
-data <- load_seeg(dataset = "seeg_industry", 
-                  raw_data = FALSE,
-                  geo_level = "state")
+data <- load_seeg(
+  dataset = "seeg_industry",
+  raw_data = FALSE,
+  geo_level = "state"
+)
 ```
 
 🔴 This function uses the `googledrive` package to download data at the
 municipality level. In case of authentication errors, see
 [googledrive](#googledrive).
 
-## CIPÓ
+## CENSOAGRO
 
-Mappings by [Plataforma CIPÓ](https://plataformacipo.org/) on
-environmental crimes. Each dataset available is a spreadsheet pertaining
-to a different aspect of environmental crimes, namely: the Brazilian
-institutions and organization involved in their prevention (the
-`"brazilian_actors"` dataset); the international agreements, treaties
-and conventions related to the subject (the
-`"international_cooperation"` dataset); and the arrangements regarding
-forest governance (the `"forest_governance"` dataset).
+The census of agriculture collects information about agricultural
+establishments and the agricultural activities carried out there,
+covering characteristics of the producer and establishment, economy and
+employment in rural areas, livestock, farming and agroindustry.
+
+Data is collected by IBGE and is available at country, state and
+municipality level.
 
 ------------------------------------------------------------------------
 
 **Options:**
 
-1.  **dataset**: there are three choices:
-    -   `"brazilian_actors"`: mapping of Brazilian actors involved in
-        preventing environmental crimes.
-    -   `"international_cooperation"`: mapping of international
-        agreements, treaties and conventions.
-    -   `"forest_governance"`: mapping of forest governance
-        arrangements.
-2.  **search**: Filters the dataset to the rows containing the chosen
-    search parameter.
+1.  **dataset**:there are 10 possible choices:
+
+    - `"agricultural_land_area"`: area and number of agricultural
+      properties
+    - `"agricultural_area_use"`: area of agricultural properties by use
+    - `"agricultural_employees_tractors"`: number of employees and
+      tractors in agricultural properties
+    - `"agricultural_producer_condition"`: condition of agricultural
+      producer, whether they own the land
+    - `"animal_production"`: number of animals farmed, by species
+    - `"animal_products"`: amount of animal products, by product type
+    - `"vegetable_production_area"`: area and amount produced, by
+      vegetable product
+    - `"vegetable_production_temporary"`: amount produced, by temporary
+      crop
+    - `"vegetable_production_permanent"`: amount produced, by permanent
+      crop
+    - `"livestock_production"`: amount of bovine cattle, and number of
+      agricultural properties
+
+2.  **raw_data**: there are two options:
+
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
+
+3.  **geo_level**: `"country"` or `"state"`. For dataset
+    `"livestock_production"`, it can also be `"municipality"`
+
+4.  **time_period**: picks the years for which the data will be
+    downloaded:
+
+    - For datasets `"agricultural_land_area"`,
+      `"agricultural_producer_condition"`, `"animal_products"`, and
+      `"vegetable_production_area"`, it can be one of 1920, 1940, 1950,
+      1960, 1970, 1975, 1980, 1985, 1995, or 2006.
+    - For datasets `"vegetable_production_permanent"` and
+      `"vegetable_production_permanent"`, it can only be from 1940
+      onwards
+    - For datasets `"agricultural_area_use"`,
+      `"agricultural_employees_tractors"`, `"animal_production"`, it can
+      only be from 1970 onwards
+    - For dataset `"livestock_production"`, it can only be 2017
+
+5.  **language**: you can choose between Portuguese `("pt")` and English
+    `("eng")`
 
 ------------------------------------------------------------------------
 
 **Examples:**
 
 ``` r
-# download the spreacdsheet on Brazilian actors involved in fighting environmental crimes
-brazilian_actors <- load_cipo(dataset = "brazilian_actors")
-# searching only for entries containing IBAMA
-actors_ibama <- load_cipo(dataset = "brazilian_actors",
-                          search = "ibama")
-# entries containing IBAMA or FUNAI
-actors_ibama <- load_cipo(dataset = "brazilian_actors",
-                          search = "ibama|funai")
+# Download total land area data at the country level in year 2006
+data <- load_censoagro(
+  dataset = "agricultural_land_area",
+  raw_data = TRUE,
+  geo_level = "country",
+  time_period = 2006
+)
+
+# Download temporary production crops data by state (geo_level = "state") in year 2006
+# in portuguese (language = "pt")
+data <- load_censoagro(
+  dataset = "vegetable_production_temporary",
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 1996,
+  language = "pt"
+)
 ```
 
 # Social Data
@@ -641,16 +695,16 @@ level and data is available in 2014 and 2018.
 
 1.  **dataset**:
 
-    -   `"all"`, `"life_quality"`, `"sanit_habit"`, `"violence"`,
-        `"educ"`, `"communic"`, `"mortality"`, or `"deforest"`
+    - `"all"`, `"life_quality"`, `"sanit_habit"`, `"violence"`,
+      `"educ"`, `"communic"`, `"mortality"`, or `"deforest"`
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
-3.  **time_period**: picks the years for which the data will be
-    downloaded
+3.  **time_period**: can be 2014, 2018, 2021, or a vector with some
+    combination thereof
 
 4.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
@@ -660,12 +714,14 @@ level and data is available in 2014 and 2018.
 **Examples:**
 
 ``` r
-# Download raw data from 2014 
+# Download raw data from 2014
 data <- load_ips(dataset = "all", raw_data = TRUE, time_period = 2014)
 
 # Download treated deforest data from 2018 in portuguese
-data <- load_ips(dataset = "deforest", raw_data = FALSE,
-                 time_period = 2018, language = "pt")
+data <- load_ips(
+  dataset = "deforest", raw_data = FALSE,
+  time_period = 2018, language = "pt"
+)
 ```
 
 ## DATASUS
@@ -683,28 +739,28 @@ each avaliable dataset.
 
 1.  **dataset**:
 
-    -   `"datasus_sim_do"` has SIM-DO mortality data
-    -   Possible subsets of SIM-DO are `"datasus_sim_dofet"` (Fetal),
-        `"datasus_sim_doext"` (External causes), `"datasus_sim_doinf"`
-        (Children), `"datasus_sim_domat"` (Maternal)
-    -   `"datasus_sih"` has SIH hospitalization data.
-    -   `"datasus_cnes_lt"` has data on the number of hospital beds.
-    -   further subsets of CNES are listed later, but those only allow
-        for the download of raw data.
+    - `"datasus_sim_do"` has SIM-DO mortality data
+    - Possible subsets of SIM-DO are `"datasus_sim_dofet"` (Fetal),
+      `"datasus_sim_doext"` (External causes), `"datasus_sim_doinf"`
+      (Children), `"datasus_sim_domat"` (Maternal)
+    - `"datasus_sih"` has SIH hospitalization data.
+    - `"datasus_cnes_lt"` has data on the number of hospital beds.
+    - further subsets of CNES are listed later, but those only allow for
+      the download of raw data.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data. Only
-        effective for SIM-DO and subsets, SIH, and CNES-LT.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data. Only
+      effective for SIM-DO and subsets, SIH, and CNES-LT.
 
 3.  **keep_all**: only applies when raw_data is FALSE. There are two
     options:
 
-    -   `TRUE`: keeps all original variables, adding variable labels and
-        possibly constructing extra variables.
-    -   `FALSE`: aggregates data at the municipality, thereby losing
-        individual-level data, and only keeping aggregate measures.
+    - `TRUE`: keeps all original variables, adding variable labels and
+      possibly constructing extra variables.
+    - `FALSE`: aggregates data at the municipality, thereby losing
+      individual-level data, and only keeping aggregate measures.
 
 4.  **time_period**: picks the years for which the data will be
     downloaded
@@ -747,25 +803,31 @@ all individual-level variables.
 ``` r
 library(datazoom.amazonia)
 
-# download raw data for the year 2010 in the state of AM. 
-data <- load_datasus(dataset = "datasus_sim_do",
-                     time_period = 2010,
-                     states = "AM",
-                     raw_data = TRUE)
+# download raw data for the year 2010 in the state of AM.
+data <- load_datasus(
+  dataset = "datasus_sim_do",
+  time_period = 2010,
+  states = "AM",
+  raw_data = TRUE
+)
 
 # download treated data with the number of deaths by cause in AM and PA.
-data <- load_datasus(dataset = "datasus_sim_do",
-                    time_period = 2010,
-                    states = c("AM", "PA"),
-                    raw_data = FALSE)
+data <- load_datasus(
+  dataset = "datasus_sim_do",
+  time_period = 2010,
+  states = c("AM", "PA"),
+  raw_data = FALSE
+)
 
 # download treated data with the number of deaths by cause in AM and PA
 # keeping all individual variables.
-data <- load_datasus(dataset = "datasus_sim_do",
-                    time_period = 2010,
-                    states = c("AM", "PA"),
-                    raw_data = FALSE,
-                    keep_all = TRUE)
+data <- load_datasus(
+  dataset = "datasus_sim_do",
+  time_period = 2010,
+  states = c("AM", "PA"),
+  raw_data = FALSE,
+  keep_all = TRUE
+)
 ```
 
 ##### DATASUS - CNES (National Register of Health Establishments)
@@ -791,10 +853,12 @@ SUS, which can be aggregated by municipality (with option
 library(datazoom.amazonia)
 
 # download treated data with the number of avaliable beds in AM and PA.
-data <- load_datasus(dataset = "datasus_cnes_lt",
-                    time_period = 2010,
-                    states = c("AM", "PA"),
-                    raw_data = FALSE)
+data <- load_datasus(
+  dataset = "datasus_cnes_lt",
+  time_period = 2010,
+  states = c("AM", "PA"),
+  raw_data = FALSE
+)
 ```
 
 ##### DATASUS - SIH (System of Hospital Information)
@@ -809,16 +873,20 @@ dataset.
 library(datazoom.amazonia)
 
 # download raw data
-data <- load_datasus(dataset = "datasus_sih",
-                    time_period = 2010,
-                    states = "AM",
-                    raw_data = TRUE)
+data <- load_datasus(
+  dataset = "datasus_sih",
+  time_period = 2010,
+  states = "AM",
+  raw_data = TRUE
+)
 
 # download data in a single tibble, with variable labels
-data <- load_datasus(dataset = "datasus_sih",
-                    time_period = 2010,
-                    states = "AM",
-                    raw_data = FALSE)
+data <- load_datasus(
+  dataset = "datasus_sih",
+  time_period = 2010,
+  states = "AM",
+  raw_data = FALSE
+)
 ```
 
 ## IEMA
@@ -835,8 +903,8 @@ throughout the Amazon region in the year 2018.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
@@ -852,6 +920,44 @@ data <- load_iema(raw_data = FALSE)
 
 🔴 This function uses the `googledrive` package to download data. In
 case of authentication errors, see [googledrive](#googledrive).
+
+## Population
+
+Loads IBGE information on estimated population (2001-2006, 2008-2009,
+2011-2021) or population (2007 and 2010) data. Data is available at
+country, state and municipality level and from 2001 to 2021.
+
+------------------------------------------------------------------------
+
+**Options:**
+
+1.  **dataset**: `"population"`
+
+2.  **raw_data**: there are two options:
+
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
+
+3.  **geo_level**: `"country"`, `"state"`, or `"municipality"`
+
+4.  **time_period**: picks the years for which the data will be
+    downloaded
+
+5.  **language**: you can choose between Portuguese `("pt")` and English
+    `("eng")`
+
+------------------------------------------------------------------------
+
+**Examples:**
+
+``` r
+# download treated population data at the state level for 2010 to 2012
+data <- load_population(
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 2010:2012
+)
+```
 
 # Economic Data
 
@@ -882,15 +988,15 @@ granularity of location.
 
 1.  **dataset**: there are four choices:
 
-    -   `"comex_export_mun"`: selects exports data by municipality
-    -   `"comex_import_mun"`: selects imports data by municipality
-    -   `"comex_export_prod"`: selects exports data by producer
-    -   `"comex_import_prod"`: selects imports data by producer
+    - `"comex_export_mun"`: selects exports data by municipality
+    - `"comex_import_mun"`: selects imports data by municipality
+    - `"comex_export_prod"`: selects exports data by producer
+    - `"comex_import_prod"`: selects imports data by producer
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **time_period**: picks the years for which the data will be
     downloaded
@@ -905,14 +1011,18 @@ granularity of location.
 ``` r
 # download treated (raw_data = FALSE) exports data by municipality (dataset = "comex_export_mun")
 # from 2020 to 2021 (time_period = 2020:2021)
-data <- load_br_trade(dataset = "comex_export_mun", 
-                      raw_data = FALSE, 
-                      time_period = 2020:2021)
+data <- load_br_trade(
+  dataset = "comex_export_mun",
+  raw_data = FALSE,
+  time_period = 2020:2021
+)
 # download treated(raw_data = FALSE) imports data by municipality (dataset = "comex_import_mun")
-# from 2020 to 2021 (time_period = 2020:2021) 
-data <- load_br_trade(dataset = "comex_import_mun",
-                      raw_data = FALSE, 
-                      time_period = 2020:2021)
+# from 2020 to 2021 (time_period = 2020:2021)
+data <- load_br_trade(
+  dataset = "comex_import_mun",
+  raw_data = FALSE,
+  time_period = 2020:2021
+)
 ```
 
 ## BACI
@@ -933,12 +1043,12 @@ Therefore, downloading the data can take a long time.
 
 1.  **dataset**: there is one choice:
 
-    -   `"HS92"` which follows the Harmonized System method
+    - `"HS92"` which follows the Harmonized System method
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **time_period**: picks the years for which the data will be
     downloaded
@@ -974,8 +1084,8 @@ from 2002 to 2018.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"state"`, or `"municipality"`
 
@@ -991,9 +1101,11 @@ from 2002 to 2018.
 
 ``` r
 # download treated municipal GDP data at the state level for 2010 to 2012
-data <- load_pibmunic(raw_data = FALSE,
-                      geo_level = "state",
-                      time_period = 2010:2010)
+data <- load_pibmunic(
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 2010:2012
+)
 ```
 
 ## CEMPRE
@@ -1013,8 +1125,8 @@ National Register of Legal Entities. Data is available between 2006 and
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"state"` or `"municipality"`
 
@@ -1036,17 +1148,19 @@ National Register of Legal Entities. Data is available between 2006 and
 # from 2008 to 2010 (time_period = 2008:2010).
 data <- load_cempre(
   raw_data = TRUE,
-  geo_level = "country", 
+  geo_level = "country",
   time_period = 2008:2010
-) 
-# Download treted data (raw_data = FALSE) by state (geo_level = "state") 
+)
+# Download treted data (raw_data = FALSE) by state (geo_level = "state")
 # from 2008 to 2010 (time_period = 2008:2010) in portuguese (language = "pt").
 # In this example, data is split by sector (sectors = TRUE)
-data <- load_cempre(raw_data = FALSE,
-                    geo_level = "state", 
-                    time_period = 2008:2010,
-                    language = "pt",
-                    sectors = TRUE) 
+data <- load_cempre(
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 2008:2010,
+  language = "pt",
+  sectors = TRUE
+)
 ```
 
 ## PAM
@@ -1089,8 +1203,8 @@ link](https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/911
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"region"`, `"state"`, or
     `"municipality"`
@@ -1105,8 +1219,12 @@ link](https://www.ibge.gov.br/estatisticas/economicas/agricultura-e-pecuaria/911
 
 The datasets supported are shown in the tables below, made up of both
 the original databases and their narrower subsets. Note that downloading
-only specific crops is considerably faster. First, the datasets provided
-by IBGE in their entirety:
+only specific crops is considerably faster.
+
+<details>
+<summary>
+Full datasets provided by IBGE:
+</summary>
 
 | dataset         |
 |:----------------|
@@ -1118,7 +1236,11 @@ by IBGE in their entirety:
 | peanut          |
 | beans           |
 
+</details>
+<details>
+<summary>
 Datasets generated from Temporary Crops:
+</summary>
 
 | dataset           |          Name (pt)           |          Name (eng)           |
 |:------------------|:----------------------------:|:-----------------------------:|
@@ -1157,7 +1279,11 @@ Datasets generated from Temporary Crops:
 | triticale         |     Triticale (em Grao)      |     Triticale (in grain)      |
 | temporary_total   |            Total             |             Total             |
 
+</details>
+<details>
+<summary>
 Datasets generated from Permanent Crops:
+</summary>
 
 | dataset                 |          Name (pt)          |         Name (eng)         |
 |:------------------------|:---------------------------:|:--------------------------:|
@@ -1201,15 +1327,19 @@ Datasets generated from Permanent Crops:
 | grape                   |             Uva             |           Grape            |
 | permanent_total         |            Total            |           Total            |
 
+</details>
+
 **Examples:**
 
 ``` r
 # download treated data at the state level from 2010 to 2011 for all crops
-data <- load_pam(dataset = "all_crops", 
-                 raw_data = FALSE, 
-                 geo_level = "state", 
-                 time_period = 2010:2011,
-                 language = "eng")
+data <- load_pam(
+  dataset = "all_crops",
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 2010:2011,
+  language = "eng"
+)
 ```
 
 ## PEVS
@@ -1236,20 +1366,20 @@ link](https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fi
 
 1.  **dataset**: there are three choices:
 
-    -   `"pevs_forest_crops"`: provides data related to both quantity
-        and value of the forestry activities. The data goes from 1986 to
-        2019 and it is divided by type of product.
-    -   `"pevs_silviculture"`: provides data related to both quantity
-        and value of the silviculture. The data goes from 1986 to 2019
-        and it is divided by type of product.
-    -   `"pevs_silviculture_area"`: total existing area used for
-        silviculture in 12/31.The data goes from 2013 to 2019 and it is
-        divided by forestry species.
+    - `"pevs_forest_crops"`: provides data related to both quantity and
+      value of the forestry activities. The data goes from 1986 to 2019
+      and it is divided by type of product.
+    - `"pevs_silviculture"`: provides data related to both quantity and
+      value of the silviculture. The data goes from 1986 to 2019 and it
+      is divided by type of product.
+    - `"pevs_silviculture_area"`: total existing area used for
+      silviculture in 12/31.The data goes from 2013 to 2019 and it is
+      divided by forestry species.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"region"`, `"state"`, or
     `"municipality"`
@@ -1265,21 +1395,25 @@ link](https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fi
 **Examples:**
 
 ``` r
-# Download treated (raw_data = FALSE) silviculture data (dataset = 'pevs_silviculture') 
-# by state (geo_level = 'state') from 2012 (time_period =  2012) 
+# Download treated (raw_data = FALSE) silviculture data (dataset = 'pevs_silviculture')
+# by state (geo_level = 'state') from 2012 (time_period =  2012)
 # in portuguese (language = "pt")
-data <- load_pevs(dataset = 'pevs_silviculture', 
-                  raw_data = FALSE,
-                  geo_level = 'state', 
-                  time_period = 2012, 
-                  language = "pt")
+data <- load_pevs(
+  dataset = "pevs_silviculture",
+  raw_data = FALSE,
+  geo_level = "state",
+  time_period = 2012,
+  language = "pt"
+)
 
-# Download raw (raw_data = TRUE) forest crops data by region 
+# Download raw (raw_data = TRUE) forest crops data by region
 # from 2012 to 2013 in english
-data <- load_pevs(dataset = 'pevs_forest_crops', 
-                  raw_data = TRUE, 
-                  geo_level = "region", 
-                  time_period = 2012:2013)
+data <- load_pevs(
+  dataset = "pevs_forest_crops",
+  raw_data = TRUE,
+  geo_level = "region",
+  time_period = 2012:2013
+)
 ```
 
 ## PPM
@@ -1307,8 +1441,8 @@ link](https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fi
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **geo_level**: `"country"`, `"region"`, `"state"`, or
     `"municipality"`
@@ -1324,20 +1458,24 @@ link](https://www.ibge.gov.br/en/statistics/economic/agriculture-forestry-and-fi
 **Examples:**
 
 ``` r
-# Download treated data (raw_data = FALSE) about aquaculture (dataset = "ppm_aquaculture") 
+# Download treated data (raw_data = FALSE) about aquaculture (dataset = "ppm_aquaculture")
 # from 2013 to 2015 (time_period = 2013:2015) in english
-# with the level of aggregation being the country (geo_level = "country"). 
-data <- load_ppm(dataset = "ppm_aquaculture", 
-                 raw_data = FALSE, 
-                 geo_level = "country", 
-                 time_period = 2013:2015)
+# with the level of aggregation being the country (geo_level = "country").
+data <- load_ppm(
+  dataset = "ppm_aquaculture",
+  raw_data = FALSE,
+  geo_level = "country",
+  time_period = 2013:2015
+)
 
 # Download raw data about sheep farming by state from 1980 to 1995 in portuguese (language = "pt")
-data <- load_ppm(dataset = "ppm_sheep_farming", 
-                 raw_data = TRUE, 
-                 geo_level = "state", 
-                 time_period = 1980:1995, 
-                 language = "pt")
+data <- load_ppm(
+  dataset = "ppm_sheep_farming",
+  raw_data = TRUE,
+  geo_level = "state",
+  time_period = 1980:1995,
+  language = "pt"
+)
 ```
 
 ## SIGMINE
@@ -1355,8 +1493,8 @@ Agency (ANM) is responsible for this survey.
 
 2.  **raw_data**: there are two options:
 
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 
 3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
@@ -1367,9 +1505,11 @@ Agency (ANM) is responsible for this survey.
 
 ``` r
 # Download treated data (raw_data = FALSE) in portuguese (language = "pt").
-data <- load_sigmine(dataset = 'sigmine_active', 
-                     raw_data = FALSE,
-                     language = "pt")
+data <- load_sigmine(
+  dataset = "sigmine_active",
+  raw_data = FALSE,
+  language = "pt"
+)
 ```
 
 ## ANEEL
@@ -1380,8 +1520,8 @@ Energy (MME). ANEEL works to provide favorable conditions for the
 Electrical Energy Market to develop with balance and for the benefit of
 society.
 
-As for now, there are two different datasets available for download: the
-Energy Development Budget and the Energy Generation.
+As for now, there are three different datasets available for download:
+the Energy Development Budget and the Energy Generation.
 
 #### Energy Development Budget
 
@@ -1391,7 +1531,7 @@ the Brazilian energy development and is managed by the Electrical Energy
 Commercialization Chamber (CCEE).
 
 The dataset makes available the year of the observation – from 2013 to
-2022 –, the type of expense, its value in R$ (Reais) and its share over
+2022 –, the type of expense, its value in R\$ (Reais) and its share over
 the total amount of CDE budget expenses on the year\*.
 
 \*Note that ‘share_of_total’ values sum to 1 for each year available.
@@ -1413,17 +1553,40 @@ back as 1924 up to 2022.
 link](https://app.powerbi.com/view?r=eyJrIjoiNjc4OGYyYjQtYWM2ZC00YjllLWJlYmEtYzdkNTQ1MTc1NjM2IiwidCI6IjQwZDZmOWI4LWVjYTctNDZhMi05MmQ0LWVhNGU5YzAxNzBlMSIsImMiOjR9)
 and select “Manual do Usuario”.
 
+#### Energy Enterprises
+
+The Energy Enterprises dataset showcases information about distributed
+micro and mini generators, covered by the Regulatory Resolution nº
+482/2012. The list of projects is classified by variables that make up
+their identification, namely: connected distributor, project code,
+numerical nucleus of the project code, owner name, production class,
+subgroup, name of the owner, number of consumer units that receive
+credits, connection date, type of generating unit, source, installed
+power, municipality, and federative unit where it is located.
+
+The data is expressed in quantities and installed power in kW
+(kilowatt). The quantity corresponds to the number of distributed micro
+or mini generators installed in the specified period. The installed
+power is defined by the sum of the nominal active electric power of the
+generating units.
+
+\* For more details on each variable, access [This
+link](https://dadosabertos.aneel.gov.br/dataset/relacao-de-empreendimentos-de-geracao-distribuida)
+and select “Dicionário de dados”.
+
 ------------------------------------------------------------------------
 
 **Options:**
 
-1.  **dataset**: there are two choices:
-    -   `"energy_development_budget"`: government spending towards
-        energy sources
-    -   `"energy_generation"`: energy generation by entity/corporation
+1.  **dataset**: there are three choices:
+    - `"energy_development_budget"`: government spending towards energy
+      sources
+    - `"energy_generation"`: energy generation by entity/corporation
+    - `"energy_enterprises_distributed"`: distributed micro and mini
+      generators
 2.  **raw_data**: there are two options:
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 3.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
 
@@ -1434,8 +1597,8 @@ and select “Manual do Usuario”.
 ``` r
 # download treated data about energy generation
 clean_aneel <- load_aneel(
- dataset = "energy generation",
- raw_data = FALSE
+  dataset = "energy generation",
+  raw_data = FALSE
 )
 ```
 
@@ -1498,17 +1661,17 @@ is in the Legal Amazon or not.
 **Options:**
 
 1.  **dataset**: there are two choices:
-    -   `"energy_consumption_per_class"`: monthly energy consumption and
-        consumers by State, Region or Electric Subsystem
-    -   `"national_energy_balance"`: yearly energy generation per
-        source, by State
+    - `"energy_consumption_per_class"`: monthly energy consumption and
+      consumers by State, Region or Electric Subsystem
+    - `"national_energy_balance"`: yearly energy generation per source,
+      by State
 2.  **raw_data**: there are two options:
-    -   `TRUE`: if you want the data as it is originally.
-    -   `FALSE`: if you want the treated version of the data.
+    - `TRUE`: if you want the data as it is originally.
+    - `FALSE`: if you want the treated version of the data.
 3.  **geo_level**: only applies to the `"energy_consumption_per_class"`
     dataset.
-    -   `"state"`
-    -   `"subsystem"`
+    - `"state"`
+    - `"subsystem"`
 4.  **language**: you can choose between Portuguese `("pt")` and English
     `("eng")`
 
@@ -1557,14 +1720,14 @@ You **must** tick all boxes when the permissions page opens, or else the
 following error will occur:
 
 ``` r
-#Error in `gargle_abort_request_failed()`:
-#! Client error: (403) Forbidden
-#Insufficient Permission: Request had insufficient authentication scopes.
-#• domain: global
-#• reason: insufficientPermissions
-#• message: Insufficient Permission: Request had insufficient authentication
+# Error in `gargle_abort_request_failed()`:
+# ! Client error: (403) Forbidden
+# Insufficient Permission: Request had insufficient authentication scopes.
+# • domain: global
+# • reason: insufficientPermissions
+# • message: Insufficient Permission: Request had insufficient authentication
 #  scopes.
-#Run `rlang::last_error()` to see where the error occurred.
+# Run `rlang::last_error()` to see where the error occurred.
 ```
 
 For further information, click
@@ -1576,3 +1739,18 @@ package page.
 DataZoom is developed by a team at Pontifícia Universidade Católica do
 Rio de Janeiro (PUC-Rio), Department of Economics. Our official website
 is at: <https://www.econ.puc-rio.br/datazoom/>.
+
+To cite package `datazoom.amazonia` in publications use:
+
+> Data Zoom (2023). Data Zoom: Simplifying Access To Brazilian
+> Microdata.  
+> <https://www.econ.puc-rio.br/datazoom/english/index.html>
+
+A BibTeX entry for LaTeX users is:
+
+    @Unpublished{DataZoom2023,
+        author = {Data Zoom},
+        title = {Data Zoom: Simplifying Access To Brazilian Microdata},
+        url = {https://www.econ.puc-rio.br/datazoom/english/index.html},
+        year = {2023},
+    }

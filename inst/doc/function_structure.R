@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -38,7 +38,7 @@ sidra_code <- available_time <- AMZ_LEGAL <- municipio_codigo <- ano <- ano_codi
 # dat = dat %>%
 #           janitor::clean_names() %>%
 #           dplyr::mutate_all(function(var){stringi::stri_trans_general(str=var,id="Latin-ASCII")})# %>%
-          # dplyr::mutate_all(clean_custom)
+# dplyr::mutate_all(clean_custom)
 #   dat = dat %>%
 #     dplyr::select(-c(nivel_territorial_codigo,nivel_territorial,ano_codigo)) %>%
 #     dplyr::mutate(valor=as.numeric(valor))
@@ -65,7 +65,7 @@ sidra_code <- available_time <- AMZ_LEGAL <- municipio_codigo <- ano <- ano_codi
 ## -----------------------------------------------------------------------------
 # dic = load_dictionary(param$dataset)
 #  types = as.character(dic$var_code)
-#  types = types[types != "0"] 
+#  types = types[types != "0"]
 
 ## -----------------------------------------------------------------------------
 # if (param$language == 'pt'){

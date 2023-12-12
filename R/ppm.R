@@ -2,7 +2,7 @@
 #'
 #' @description Loads information on animal farming inventories and livestock products (IBGE).
 #'
-#' @param dataset A dataset name ("ppm_livestock_inventory", "ppm_sheep_farming", "ppm_animal_orig_production", "ppm_cow_farming" or "ppm_aquaculture". You can also use SIDRA codes (see \url{https://sidra.ibge.gov.br/pesquisa/ppm/tabelas/brasil/2019})
+#' @param dataset A dataset name ("ppm_livestock_inventory", "ppm_sheep_farming", "ppm_animal_orig_production", "ppm_cow_farming" or "ppm_aquaculture". You can also use SIDRA codes (see \url{https://sidra.ibge.gov.br/pesquisa/ppm/tabelas/brasil/2021})
 #' @inheritParams load_baci
 #' @param geo_level A \code{string} that defines the geographic level of the data. Can be one of "country", "state" or "municipality".
 #'
@@ -33,7 +33,6 @@
 load_ppm <- function(dataset, raw_data = FALSE,
                      geo_level, time_period,
                      language = "eng") {
-
   ##############################
   ## Binding Global Variables ##
   ##############################
@@ -49,6 +48,7 @@ load_ppm <- function(dataset, raw_data = FALSE,
   #############################
 
   param <- list()
+  param$source <- "ppm"
   param$dataset <- dataset
   param$geo_level <- geo_level
   param$time_period <- time_period
@@ -65,25 +65,9 @@ load_ppm <- function(dataset, raw_data = FALSE,
     param$code <- param$dataset
   }
 
-  ## Check if year is acceptable
+  # check if dataset, geo_level, and time_period are supported
 
-  year_check <- datasets_link() %>%
-    dplyr::filter(dataset == param$dataset) %>%
-    dplyr::select(available_time) %>%
-    unlist() %>%
-    as.character() %>%
-    stringr::str_split(pattern = "-") %>%
-    unlist() %>%
-    as.numeric()
-
-  if (min(time_period) < year_check[1]) {
-    stop("Provided time period less than supported. Check documentation for time availability.")
-  }
-  if (max(time_period) > year_check[2]) {
-    stop("Provided time period greater than supported. Check documentation for time availability.")
-  }
-
-
+  check_params(param)
 
   ## Dataset
 
@@ -424,7 +408,6 @@ load_ppm <- function(dataset, raw_data = FALSE,
 
 
   if (language == "eng") {
-
     # f = dat %>%
     #   dplyr::mutate_at(vars(tidyr::matches(as.character(types[1]))),
     #                    ~ labelled::set_variable_labels(. = as.character(dic[dic$var_code == types[1],'var_eng']))

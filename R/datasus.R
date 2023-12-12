@@ -45,7 +45,6 @@ load_datasus <- function(dataset,
                          raw_data = FALSE,
                          keep_all = FALSE,
                          language = "eng") {
-
   # Checking for foreign package (in Suggests)
 
   if (!requireNamespace("foreign", quietly = TRUE)) {
@@ -71,7 +70,7 @@ load_datasus <- function(dataset,
   . <- abbrev_state <- code_muni <- code_muni_6 <- code_state <- codmunocor <- NULL
   codufmun <- dtobito <- file_name <- is_cid_code <- label_eng <- label_pt <- NULL
   legal_amazon <- link <- month <- name_muni <- qt_exist <- qt_nsus <- value <- NULL
-  var_code <- year <- qt_sus <- causabas <- NULL
+  var_code <- year <- qt_sus <- causabas <- available_time <- NULL
 
   #############################
   ## Define Basic Parameters ##
@@ -79,6 +78,7 @@ load_datasus <- function(dataset,
 
   param <- list()
 
+  param$source <- "datasus"
   param$dataset <- dataset
   param$raw_data <- raw_data
   param$language <- language
@@ -93,6 +93,10 @@ load_datasus <- function(dataset,
 
   param$skip_rows <- NULL
   param$filenames <- NULL
+
+  # check if dataset and time_period are valid
+
+  check_params(param)
 
   ######################
   ## Downloading Data ##
@@ -177,7 +181,7 @@ load_datasus <- function(dataset,
         base::message(paste0("Downloading file ", file_name, " (", iteration, " out of ", length(filenames), ")"))
 
         external_download(
-          source = "datasus",
+          source = param$source,
           dataset = param$dataset,
           skip_rows = param$skip_rows,
           file_name = file_name
@@ -298,7 +302,6 @@ load_datasus <- function(dataset,
   #################
 
   if (stringr::str_detect(param$dataset, "datasus_sim") & !param$keep_all) {
-
     # Obtaining the mortality variables
 
     cid_vars <- load_dictionary(param$dataset) %>%

@@ -3,7 +3,7 @@
 #' @description Loads information on the social and environmental performance of the Legal Amazon.
 #'
 #' @param dataset A dataset name ("all", "life_quality", "sanit_habit", "violence", "educ", "communic", "mortality", or "deforest")
-#' @param time_period Year to download. Can be 2014, 2018, 2021, or a vector with some combination thereof
+#' @param time_period Year to download. Can be 2014, 2018, 2021, 2023, or a vector with some combination thereof
 #' @inheritParams load_baci
 #'
 #' @return A \code{tibble}.
@@ -22,8 +22,7 @@
 #' @export
 
 load_ips <- function(dataset = "all", raw_data = FALSE,
-                     time_period = c(2014, 2018, 2021), language = "eng") {
-
+                     time_period = c(2014, 2018, 2021, 2023), language = "eng") {
   ###########################
   ## Bind Global Variables ##
   ###########################
@@ -83,24 +82,32 @@ load_ips <- function(dataset = "all", raw_data = FALSE,
   #############################
 
   param <- list()
+  param$source <- "ips"
   param$dataset <- dataset
   param$time_period <- time_period
   param$language <- language
   param$raw_data <- raw_data
 
+  # check if dataset and time_period are valid
+
+  check_params(param)
+
   # Picking which sheet to download
 
   sheet_list <- c(
-    "2014" = "IPS 2014",
-    "2018" = "IPS 2018 ",
-    "2021" = "IPS 2021"
+    "2014" = "2014",
+    "2018" = "2018 ",
+    "2021" = "2021",
+    "2023" = "2023"
   )
 
   sheets <- param$time_period %>%
-    {purrr::quietly(dplyr::recode)}(!!!sheet_list) %>%
+    {
+      purrr::quietly(dplyr::recode)
+    }(!!!sheet_list) %>%
     purrr::pluck("result")
 
-  if(any(is.na(sheets))) {
+  if (any(is.na(sheets))) {
     stop("Some of the years you request aren't available. Check documentation for time availability.")
   }
 
@@ -109,8 +116,8 @@ load_ips <- function(dataset = "all", raw_data = FALSE,
   ##############
 
   dat <- external_download(
-    dataset = "ips",
-    source = "ips",
+    dataset = param$dataset,
+    source = param$source,
     sheet = sheets
   )
 
@@ -131,7 +138,7 @@ load_ips <- function(dataset = "all", raw_data = FALSE,
 
   # removing years from column names to be able to match columns from different years
 
-  strs_to_remove <- paste0("_", 2012:2021, collapse = "|")
+  strs_to_remove <- paste0("_", 2012:2023, collapse = "|")
 
   dat <- dat %>%
     purrr::map(

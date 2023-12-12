@@ -1,46 +1,46 @@
 #' @title PRODES - Deforestation Monitoring Project in the Legal Amazon by Satellite
 #'
-#' @description Loads information on clearcut deforestation in the Legal Amazon and annual deforestation rates in the region.
+#' @description Loads data on deforestation in the Legal Amazon region.
 #'
-#' @param dataset A dataset name ("prodes").
+#' @param dataset A dataset name ("deforestation").
 #' @inheritParams load_baci
 #'
 #' @return A \code{tibble} with the selected data.
 #'
 #' @examples
 #' \dontrun{
-#' # Download treated data (raw_data = FALSE) from 2010 (time_period = 2010)
+#' # Download treated data (raw_data = FALSE)
 #' # in portuguese (language = 'pt').
 #' data <- load_prodes(
 #'   raw_data = FALSE,
-#'   time_period = 2010,
 #'   language = "pt"
 #' )
 #' }
 #'
 #' @export
 
-load_prodes <- function(dataset = "prodes", raw_data = FALSE,
-                        time_period,
+load_prodes <- function(dataset, raw_data = FALSE,
                         language = "eng") {
-
   ###########################
   ## Bind Global Variables ##
   ###########################
 
-  survey <- link <- cod_ibge <- desmatado <- estado <- floresta <- hidrografia <- NULL
-  incremento <- lat <- latgms <- long <- longms <- municipio <- nao_floresta <- NULL
-  nao_observado <- nr <- nuvem <- soma <- NULL
+  year <- municipio <- cod_ibge <- estado <- area_km2 <- increment <- NULL
+  municipality <- municipality_code <- state <- deforestation <- desmatamento2000 <- NULL
 
   #############################
   ## Define Basic Parameters ##
   #############################
 
   param <- list()
+  param$source <- "prodes"
   param$dataset <- dataset
   param$raw_data <- raw_data
-  param$time_period <- time_period
   param$language <- language
+
+  # check if dataset and time_period are supported
+
+  check_params(param)
 
   ###################
   ## Download Data ##
@@ -48,13 +48,10 @@ load_prodes <- function(dataset = "prodes", raw_data = FALSE,
 
   ## Column Names come with numbers at the side - we need to clean those
 
-  dat <- as.list(param$time_period) %>%
-    purrr::map(
-      function(t) {
-        external_download(dataset = param$dataset, source = "prodes", year = t) %>%
-          dplyr::mutate(ano = t) # Adding year variable to each dataframe
-      }
-    )
+  dat <- external_download(
+    dataset = param$dataset,
+    source = param$source
+  )
 
   ## Return Raw Data
 
@@ -66,23 +63,41 @@ load_prodes <- function(dataset = "prodes", raw_data = FALSE,
   ## Data Engineering ##
   ######################
 
-  # Removing years from each data frame's column names
+  # keep only deforestation-related variables
 
   dat <- dat %>%
-    purrr::map(
-      dplyr::rename_with,
-      .fn = ~ gsub("(.*)\\d{4}?", "\\1", .)
+    janitor::clean_names() %>%
+    dplyr::select(
+      municipio, cod_ibge, estado, area_km2, desmatamento2000, dplyr::starts_with("incremento")
+    )
+
+  # change to long format with increment variable
+
+  dat <- dat %>%
+    dplyr::rename("incremento2000" = "desmatamento2000") %>%
+    tidyr::pivot_longer(
+      dplyr::starts_with("incremento"),
+      names_prefix = "incremento",
+      names_to = "year",
+      values_to = "increment"
+    )
+
+  # calculating cumulative deforestation
+
+  dat <- dat %>%
+    dplyr::arrange(municipio, year) %>%
+    dplyr::mutate(
+      deforestation = cumsum(increment),
+      .by = municipio
     )
 
   dat <- dat %>%
-    dplyr::bind_rows() %>%
-    tibble::as_tibble() %>%
-    janitor::clean_names()
-
-  # Removing coordinate variables
-
-  dat <- dat %>%
-    dplyr::select(-c(nr, lat, long, latgms, longms))
+    dplyr::mutate(
+      increment = dplyr::case_when(
+        year == 2000 ~ NA,
+        .default = increment
+      )
+    )
 
   ################################
   ## Harmonizing Variable Names ##
@@ -93,22 +108,17 @@ load_prodes <- function(dataset = "prodes", raw_data = FALSE,
       dplyr::rename(
         "municipality" = municipio,
         "municipality_code" = cod_ibge,
-        "state" = estado,
-        "deforestation" = desmatado,
-        "increment" = incremento,
-        "forest" = floresta,
-        "cloud" = nuvem,
-        "not_observed" = nao_observado,
-        "not_forest" = nao_floresta,
-        "hydrography" = hidrografia,
-        "sum" = soma
+        "state" = estado
       )
   }
   if (param$language == "pt") {
     dat_mod <- dat %>%
       dplyr::rename(
-        "cod_municipio" = cod_ibge,
-        "uf" = estado
+        "ano" = year,
+        "cod_municipio" = "cod_ibge",
+        "uf" = estado,
+        "incremento" = increment,
+        "desmatamento" = deforestation
       )
   }
 

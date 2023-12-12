@@ -7,7 +7,7 @@
 load_aneel(dataset, raw_data = FALSE, language = "eng")
 }
 \arguments{
-\item{dataset}{A dataset name ("energy_development_budget" or "energy_generation")}
+\item{dataset}{A dataset name ("energy_development_budget", "energy_generation" or "energy_enterprises_distributed")}
 
 \item{raw_data}{A \code{boolean} setting the return of raw (\code{TRUE}) or processed (\code{FALSE}) data.}
 
@@ -20,7 +20,7 @@ National Electric Energy Agency - ANEEL
 \dontrun{
 # download treated data about energy generation
 clean_aneel <- load_aneel(
-  dataset = "energy generation",
+  dataset = "energy_generation",
   raw_data = FALSE
 )
 }

@@ -380,85 +380,85 @@ document will only happen in case the user specifies <strong>(raw_data
 <h2>Examples</h2>
 <p><strong>1. Bind Global Variables:</strong> example from
 <em>load_cempre()</em></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sidra_code <span class="ot">&lt;-</span> available_time <span class="ot">&lt;-</span> AMZ_LEGAL <span class="ot">&lt;-</span> municipio_codigo <span class="ot">&lt;-</span> ano <span class="ot">&lt;-</span> ano_codigo <span class="ot">&lt;-</span> classificacao_nacional_de_atividades_economicas_cnae_2_0_codigo <span class="ot">&lt;-</span> geo_id <span class="ot">&lt;-</span> id_code <span class="ot">&lt;-</span> nivel_territorial <span class="ot">&lt;-</span> nivel_territorial_codigo <span class="ot">&lt;-</span> valor <span class="ot">&lt;-</span> variavel <span class="ot">&lt;-</span> unidade_de_medida <span class="ot">&lt;-</span> unidade_de_medida_codigo <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>sidra_code <span class="ot">&lt;-</span> available_time <span class="ot">&lt;-</span> AMZ_LEGAL <span class="ot">&lt;-</span> municipio_codigo <span class="ot">&lt;-</span> ano <span class="ot">&lt;-</span> ano_codigo <span class="ot">&lt;-</span> classificacao_nacional_de_atividades_economicas_cnae_2_0_codigo <span class="ot">&lt;-</span> geo_id <span class="ot">&lt;-</span> id_code <span class="ot">&lt;-</span> nivel_territorial <span class="ot">&lt;-</span> nivel_territorial_codigo <span class="ot">&lt;-</span> valor <span class="ot">&lt;-</span> variavel <span class="ot">&lt;-</span> unidade_de_medida <span class="ot">&lt;-</span> unidade_de_medida_codigo <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 <p><strong>2. Define Basic Parameters:</strong> example from
 <em>load_deter()</em></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># param=list()</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$dataset = dataset</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$time_period = time_period</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$language = language</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$raw_data = raw_data</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$survey_name = datasets_link() %&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    dplyr::filter(dataset == param$dataset) %&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    dplyr::select(survey) %&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    unlist()</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  param$url = datasets_link() %&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    dplyr::filter(dataset == param$dataset) %&gt;%</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    dplyr::select(link) %&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    unlist()</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># param=list()</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#  param$dataset = dataset</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#  param$time_period = time_period</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#  param$language = language</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#  param$raw_data = raw_data</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#  param$survey_name = datasets_link() %&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#    dplyr::filter(dataset == param$dataset) %&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#    dplyr::select(survey) %&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#    unlist()</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#  param$url = datasets_link() %&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#    dplyr::filter(dataset == param$dataset) %&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#    dplyr::select(link) %&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#    unlist()</span></span></code></pre></div>
 <p><strong>3. Download Data:</strong> example from
 <em>load_degrad()</em>. It uses the <em>external_download()</em>
 function.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dat = suppressWarnings(as.list(param$time_period) %&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#      purrr::map(</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#        function(t){external_download(dataset = param$dataset,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      source=&#39;degrad&#39;, year = t) %&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            janitor::clean_names()</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#        }</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#      ))</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># dat = suppressWarnings(as.list(param$time_period) %&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#      purrr::map(</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#        function(t){external_download(dataset = param$dataset,</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#                                      source=&#39;degrad&#39;, year = t) %&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#            janitor::clean_names()</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#        }</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#      ))</span></span></code></pre></div>
 <p><strong>4. Data Engineering</strong>: example from
 <em>load_pam()</em>. In this process, we decided to exclude some columns
 and convert the variable “valor” to become numeric. After that we
 excluded all the lines with <strong>NA</strong>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dat = dat %&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#           janitor::clean_names() %&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#           dplyr::mutate_all(function(var){stringi::stri_trans_general(str=var,id=&quot;Latin-ASCII&quot;)})# %&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          <span class="co"># dplyr::mutate_all(clean_custom)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   dat = dat %&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     dplyr::select(-c(nivel_territorial_codigo,nivel_territorial,ano_codigo)) %&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     dplyr::mutate(valor=as.numeric(valor))</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   dat = dat %&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     dplyr::filter(!is.na(valor))</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># dat = dat %&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#           janitor::clean_names() %&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#           dplyr::mutate_all(function(var){stringi::stri_trans_general(str=var,id=&quot;Latin-ASCII&quot;)})# %&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># dplyr::mutate_all(clean_custom)</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#   dat = dat %&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#     dplyr::select(-c(nivel_territorial_codigo,nivel_territorial,ano_codigo)) %&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#     dplyr::mutate(valor=as.numeric(valor))</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#   dat = dat %&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#     dplyr::filter(!is.na(valor))</span></span></code></pre></div>
 <p><strong>5. Harmonizing Variable Names:</strong> example from
 <em>load_pam()</em>. We localize some datasets by using their numerical
 codes and within each of these datasets we renamed some columns.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if (param$code == 5457){</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = produto_das_lavouras_temporarias_e_permanentes_codigo,</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                     produto_das_lavouras = produto_das_lavouras_temporarias_e_permanentes)</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   if (param$code == 1613){</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = # produto_das_lavouras_permanentes_codigo,</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                     produto_das_lavouras = produto_das_lavouras_permanentes)</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   if (param$code %in% c(839,1000,1001,1002,1612)){</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = # produto_das_lavouras_temporarias_codigo,</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                   produto_das_lavouras = produto_das_lavouras_temporarias)</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># if (param$code == 5457){</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = produto_das_lavouras_temporarias_e_permanentes_codigo,</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#                     produto_das_lavouras = produto_das_lavouras_temporarias_e_permanentes)</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#   }</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#   if (param$code == 1613){</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = # produto_das_lavouras_permanentes_codigo,</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#                     produto_das_lavouras = produto_das_lavouras_permanentes)</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#   }</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#   if (param$code %in% c(839,1000,1001,1002,1612)){</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#     dat = dat %&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#       dplyr::rename(produto_das_lavouras_codigo = # produto_das_lavouras_temporarias_codigo,</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#                   produto_das_lavouras = produto_das_lavouras_temporarias)</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#   }</span></span></code></pre></div>
 <p><strong>6. Load Dictionary:</strong> example from
 <em>load_pam()</em>. For functions with data from IBGE, we load the
 dictionary and then we convert the variable “var_code” to become a
 character. Finally we exclude the observations where var_code ==
 “0”.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dic = load_dictionary(param$dataset)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  types = as.character(dic$var_code)</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  types = types[types != &quot;0&quot;] </span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># dic = load_dictionary(param$dataset)</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#  types = as.character(dic$var_code)</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#  types = types[types != &quot;0&quot;]</span></span></code></pre></div>
 <p><strong>7. Translation / add variables:</strong> example from
 <em>load_degrad()</em>.This section translates the names of the columns
 of the original Data Frame.In this example, the original columns
 (variables) were in English and therefore we translated it to Portuguese
 in case the user chooses it.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if (param$language == &#39;pt&#39;){</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    dat_mod = dat %&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#      dplyr::select(ano = year, linkcolumn, scene_id,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                    cod_uf = code_state, cod_municipio = code_muni,</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                    classe = class_name, pathrow, area, data = view_date,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                    julday, geometry</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#      ) %&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#      dplyr::arrange(ano, cod_municipio, classe)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  }</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># if (param$language == &#39;pt&#39;){</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#    dat_mod = dat %&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#      dplyr::select(ano = year, linkcolumn, scene_id,</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#                    cod_uf = code_state, cod_municipio = code_muni,</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#                    classe = class_name, pathrow, area, data = view_date,</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#                    julday, geometry</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#      ) %&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#      dplyr::arrange(ano, cod_municipio, classe)</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#  }</span></span></code></pre></div>
 </div>
 
 

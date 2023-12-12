@@ -16,7 +16,6 @@
 #' @export
 
 load_iema <- function(dataset = "iema", raw_data = FALSE, language = "eng") {
-
   # Checking for googledrive package (in Suggests)
 
   if (!requireNamespace("googledrive", quietly = TRUE)) {
@@ -38,9 +37,14 @@ load_iema <- function(dataset = "iema", raw_data = FALSE, language = "eng") {
   #############################
 
   param <- list()
+  param$source <- "iema"
   param$dataset <- dataset
   param$language <- language
   param$raw_data <- raw_data
+
+  # check if dataset is valid
+
+  check_params(param)
 
   ##############
   ## Download ##
@@ -48,7 +52,7 @@ load_iema <- function(dataset = "iema", raw_data = FALSE, language = "eng") {
 
   dat <- external_download(
     dataset = param$dataset,
-    source = "iema"
+    source = param$source
   )
 
   ## Return Raw Data
